@@ -1,7 +1,11 @@
 class Location < Struct.new(:latitude, :longitude); end
 
+def albuquerque
+  Location.new(35.12384, -106.586094)
+end
+
 Given /^I am in Albuquerque$/ do
-  @location = Location.new(35.12384, -106.586094)
+  @location = albuquerque
 end
 
 When /^I list stores near me$/ do
@@ -16,10 +20,10 @@ Given /^"(.*?)" carries "(.*?)"$/ do |store_name, cigar_name|
   CigarStock.save_carried(store_name, cigar_name)
 end
 
-When /^I search for "(.*?)" in Albuquerque$/ do |arg1|
-  pending # express the regexp above with the code you wish you had
+When /^I search for "(.*?)" in Albuquerque$/ do |cigar|
+  @search = CigarSearch.new(cigar, albuquerque)
 end
 
-Then /^I should see it is carried by "(.*?)"$/ do |arg1|
-  pending # express the regexp above with the code you wish you had
+Then /^I should see it is carried by "(.*?)"$/ do |store|
+  @search.results.find { |result| result.store == store }.carried.should == true
 end
