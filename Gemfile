@@ -19,6 +19,9 @@ gem 'haml-rails'
 
 gem 'thin'
 
+gem 'geocoder'
+gem 'google_places'
+
 group :development do
   gem 'foreman'
 end
@@ -31,4 +34,5 @@ group :test do
   gem 'cucumber-rails', require: false
   gem 'database_cleaner'
   gem 'vcr'
+  gem 'webmock'
 end

@@ -20,3 +20,6 @@
 
 # Ignore symlinks for IDE to work
 /script
+
+# Ignore VCR recordings
+/fixtures/cassettes
