@@ -16,6 +16,10 @@ Then /^"(.*?)" should be closer than "(.*?)"$/ do |store, other_store|
   @stores.index(store).should be < @stores.index(other_store)
 end
 
+Then /^"(.*?)" should not be listed$/ do |store|
+  @stores.should_not include(store)
+end
+
 Given /^"(.*?)" carries "(.*?)"$/ do |store_name, cigar_name|
   CigarStock.save_carried(store_name, cigar_name)
 end
@@ -35,4 +39,8 @@ end
 
 Then /^I should see it is not carried by "(.*?)"$/ do |store|
   @search.results.find { |result| result.store == store }.carried.should == false
+end
+
+Then /^I should see no answer for "(.*?)"$/ do |store|
+  @search.results.find { |result| result.store == store }.carried.should == CigarSearch::NoAnswer
 end
