@@ -1,11 +1,9 @@
-class Location < Struct.new(:latitude, :longitude); end
-
-def albuquerque
-  Location.new(35.12384, -106.586094)
+def get_location(location)
+  Geocoder.search(location).first
 end
 
 Given /^I am in Albuquerque$/ do
-  @location = albuquerque
+  @location = get_location('Albuquerque')
 end
 
 When /^I list stores near me$/ do
@@ -20,16 +18,29 @@ Then /^"(.*?)" should not be listed$/ do |store|
   @stores.should_not include(store)
 end
 
-Given /^"(.*?)" carries "(.*?)"$/ do |store_name, cigar_name|
-  CigarStock.save_carried(store_name, cigar_name)
+Given /^"([^"]*?)" carries "(.*?)"$/ do |store_name, cigar|
+  CigarStock.save_carried(store_name, cigar)
 end
 
-Given /^"(.*?)" does not carry "(.*?)"$/ do |store_name, cigar_name|
-  CigarStock.save_not_carried(store_name, cigar_name)
+Given /^"(.*?)" in "(.*?)" carries "(.*?)"$/ do |store_name, location, cigar|
+  CigarStock.save_carried(store_name, cigar)
 end
 
-When /^I search for "(.*?)" in Albuquerque$/ do |cigar|
-  stores = CigarStoreSearch.stores_near(albuquerque)
+Given /^"([^"]*?)" does not carry "(.*?)"$/ do |store_name, cigar|
+  CigarStock.save_not_carried(store_name, cigar)
+end
+
+Given /^"(.*?)" in "(.*?)" does not carry "(.*?)"$/ do |store_name, location, cigar|
+  CigarStock.save_not_carried(store_name, cigar)
+end
+
+When /^I search for "([^"]*?)"$/ do |cigar|
+  stores = CigarStoreSearch.stores_near(@location)
+  @search = CigarSearch.new(cigar, stores)
+end
+
+When /^I search for "(.*?)" in "(.*?)"$/ do |cigar, location|
+  stores = CigarStoreSearch.stores_near(get_location(location))
   @search = CigarSearch.new(cigar, stores)
 end
 
