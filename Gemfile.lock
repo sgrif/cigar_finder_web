@@ -68,8 +68,6 @@ GEM
     geocoder (1.1.6)
     gherkin (2.11.6)
       json (>= 1.7.6)
-    google_places (0.9.1)
-      httparty
     haml (4.0.0)
       tilt
     haml-rails (0.4)
@@ -185,8 +183,8 @@ DEPENDENCIES
   database_cleaner
   foreman
   geocoder
-  google_places
   haml-rails
+  httparty
   jbuilder (~> 1.0.1)
   jquery-rails
   pg

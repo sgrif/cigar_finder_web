@@ -20,7 +20,7 @@ gem 'haml-rails'
 gem 'thin'
 
 gem 'geocoder'
-gem 'google_places'
+gem 'httparty'
 
 group :development do
   gem 'foreman'
