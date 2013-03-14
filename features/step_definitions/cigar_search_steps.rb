@@ -39,23 +39,27 @@ Given /^"(.*?)" in "(.*?)" does not carry "(.*?)"$/ do |store_name, location, ci
 end
 
 When /^I search for "([^"]*?)"$/ do |cigar|
-  stores = CigarStoreSearch.near(@location)
-  @search = CigarSearch.new(cigar, stores)
+  visit cigar_search_path(cigar: cigar, latitude: @location.latitude, longitude: @location.longitude, format: :json)
+  @search = ActiveSupport::JSON.decode(page.source).fetch('results')
 end
 
 When /^I search for "(.*?)" in "(.*?)"$/ do |cigar, location|
-  stores = CigarStoreSearch.near(get_location(location))
-  @search = CigarSearch.new(cigar, stores)
+  visit cigar_search_path(cigar: cigar, latitude: get_location(location).latitude, longitude: get_location(location).longitude, format: :json)
+  @search = ActiveSupport::JSON.decode(page.source).fetch('results')
+end
+
+def assert_answer(store_name, answer)
+  @search.find { |result| result.fetch('store') == store_name }.fetch('carried').should == answer
 end
 
 Then /^I should see it is carried by "(.*?)"$/ do |store_name|
-  @search.results.find { |result| result.store.name == store_name }.carried.should == true
+  assert_answer(store_name, true)
 end
 
 Then /^I should see it is not carried by "(.*?)"$/ do |store_name|
-  @search.results.find { |result| result.store.name == store_name }.carried.should == false
+  assert_answer(store_name, false)
 end
 
 Then /^I should see no answer for "(.*?)"$/ do |store_name|
-  @search.results.find { |result| result.store.name == store_name }.carried.should == CigarSearch::NoAnswer
+  assert_answer(store_name, nil)
 end
