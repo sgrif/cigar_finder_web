@@ -12,11 +12,6 @@ describe CigarStoreSearch do
   let(:here) { stub(latitude: 35.12384, longitude: -106.586094) }
   let(:cigar_store_attrs) { {name: 'Cigar Shop', latitude: 123, longitude: -123} }
 
-  it 'returns the names of stores near a location' do
-    OnlinePlaces.stub(:places_near) { [{name: 'Jims'}, {name: 'James'}] }
-    CigarStoreSearch.stores_near(here).should == ['Jims', 'James']
-  end
-
   it 'returns all of the store records near a location' do
     stores = [cigar_store_attrs]
     OnlinePlaces.stub(:places_near) { stores }

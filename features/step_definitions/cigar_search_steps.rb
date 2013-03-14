@@ -7,7 +7,7 @@ Given /^I am in Albuquerque$/ do
 end
 
 When /^I list stores near me$/ do
-  @stores = CigarStoreSearch.stores_near(@location)
+  @stores = CigarStoreSearch.near(@location).results.collect(&:name)
 end
 
 Then /^"(.*?)" should be closer than "(.*?)"$/ do |store, other_store|
