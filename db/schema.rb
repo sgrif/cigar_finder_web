@@ -11,18 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130314004102) do
+ActiveRecord::Schema.define(version: 20130314012017) do
 
   create_table "cigar_stocks", force: true do |t|
-    t.string   "store",      null: false
-    t.string   "cigar",      null: false
-    t.boolean  "carried",    null: false
+    t.string   "cigar",          null: false
+    t.boolean  "carried",        null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "cigar_store_id", null: false
   end
 
   add_index "cigar_stocks", ["cigar"], name: "index_cigar_stocks_on_cigar"
-  add_index "cigar_stocks", ["store", "cigar"], name: "index_cigar_stocks_on_store_and_cigar", unique: true
+  add_index "cigar_stocks", ["cigar_store_id", "cigar"], name: "index_cigar_stocks_on_cigar_store_id_and_cigar", unique: true
+  add_index "cigar_stocks", ["cigar_store_id"], name: "index_cigar_stocks_on_cigar_store_id"
 
   create_table "cigar_stores", force: true do |t|
     t.string   "name"
