@@ -18,15 +18,15 @@ Feature: Users can search for a cigar
 
   Scenario: Stores can have the same name
     Given "La Casa del Habano" in "Vancouver" carries "Cohiba Siglo II"
-    And "La Casa del Habano" in "Windsor" does not carry "Cohiba Siglo II"
+    And "La Casa del Habano" in "Monterrey" does not carry "Cohiba Siglo II"
 
     When I search for "Cohiba Siglo II" in "Vancouver"
     Then I should see it is carried by "La Casa del Habano"
 
-    When I search for "Cohiba Siglo II" in "Windsor"
+    When I search for "Cohiba Siglo II" in "Monterrey"
     Then I should see it is not carried by "La Casa del Habano"
 
-    When I search for "Cohiba Siglo II" in "Montreal"
+    When I search for "Cohiba Siglo II" in "Nuremberg"
     Then I should see no answer for "La Casa del Habano"
 
   Scenario: Store does not carry a cigar
