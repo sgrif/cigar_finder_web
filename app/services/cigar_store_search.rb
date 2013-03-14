@@ -17,6 +17,10 @@ class CigarStoreSearch
     @results ||= load_results
   end
 
+  def store_named(store_name)
+    results.find { |store| store.name == store_name }
+  end
+
   protected
 
   def load_results

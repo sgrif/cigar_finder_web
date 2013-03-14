@@ -39,23 +39,23 @@ Given /^"(.*?)" in "(.*?)" does not carry "(.*?)"$/ do |store_name, location, ci
 end
 
 When /^I search for "([^"]*?)"$/ do |cigar|
-  stores = CigarStoreSearch.stores_near(@location)
+  stores = CigarStoreSearch.near(@location).results
   @search = CigarSearch.new(cigar, stores)
 end
 
 When /^I search for "(.*?)" in "(.*?)"$/ do |cigar, location|
-  stores = CigarStoreSearch.stores_near(get_location(location))
+  stores = CigarStoreSearch.near(get_location(location)).results
   @search = CigarSearch.new(cigar, stores)
 end
 
-Then /^I should see it is carried by "(.*?)"$/ do |store|
-  @search.results.find { |result| result.store == store }.carried.should == true
+Then /^I should see it is carried by "(.*?)"$/ do |store_name|
+  @search.results.find { |result| result.store.name == store_name }.carried.should == true
 end
 
-Then /^I should see it is not carried by "(.*?)"$/ do |store|
-  @search.results.find { |result| result.store == store }.carried.should == false
+Then /^I should see it is not carried by "(.*?)"$/ do |store_name|
+  @search.results.find { |result| result.store.name == store_name }.carried.should == false
 end
 
-Then /^I should see no answer for "(.*?)"$/ do |store|
-  @search.results.find { |result| result.store == store }.carried.should == CigarSearch::NoAnswer
+Then /^I should see no answer for "(.*?)"$/ do |store_name|
+  @search.results.find { |result| result.store.name == store_name }.carried.should == CigarSearch::NoAnswer
 end
