@@ -1,3 +1,4 @@
+require 'active_support/core_ext'
 require_relative '../../app/services/cigar_store_search'
 require 'httparty'
 require_relative '../../app/services/online_places'
@@ -16,7 +17,7 @@ describe CigarStoreSearch do
     stores = [cigar_store_attrs]
     OnlinePlaces.stub(:places_near) { stores }
     CigarStore.should_receive(:load_stores).with(stores)
-    CigarStoreSearch.near(here).results
+    CigarStoreSearch.near(here).find{}
   end
 
   it 'finds a store in the results from a name' do

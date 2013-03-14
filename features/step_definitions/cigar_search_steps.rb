@@ -7,7 +7,7 @@ Given /^I am in Albuquerque$/ do
 end
 
 When /^I list stores near me$/ do
-  @stores = CigarStoreSearch.near(@location).results.collect(&:name)
+  @stores = CigarStoreSearch.near(@location).collect(&:name)
 end
 
 Then /^"(.*?)" should be closer than "(.*?)"$/ do |store, other_store|
@@ -39,12 +39,12 @@ Given /^"(.*?)" in "(.*?)" does not carry "(.*?)"$/ do |store_name, location, ci
 end
 
 When /^I search for "([^"]*?)"$/ do |cigar|
-  stores = CigarStoreSearch.near(@location).results
+  stores = CigarStoreSearch.near(@location)
   @search = CigarSearch.new(cigar, stores)
 end
 
 When /^I search for "(.*?)" in "(.*?)"$/ do |cigar, location|
-  stores = CigarStoreSearch.near(get_location(location)).results
+  stores = CigarStoreSearch.near(get_location(location))
   @search = CigarSearch.new(cigar, stores)
 end
 
