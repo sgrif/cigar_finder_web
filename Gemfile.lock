@@ -10,6 +10,8 @@ GEM
       erubis (~> 2.7.0)
       rack (~> 1.5.2)
       rack-test (~> 0.6.2)
+    active_model_serializers (0.7.0)
+      activemodel (>= 3.0)
     activemodel (4.0.0.beta1)
       activesupport (= 4.0.0.beta1)
       builder (~> 3.1.0)
@@ -28,6 +30,10 @@ GEM
     addressable (2.3.3)
     arel (4.0.0.beta1)
     atomic (1.0.1)
+    barber (0.4.1)
+      ember-source
+      execjs
+      handlebars-source
     builder (3.1.4)
     capybara (2.0.2)
       mime-types (>= 1.16)
@@ -58,6 +64,17 @@ GEM
     daemons (1.1.9)
     database_cleaner (0.9.1)
     diff-lcs (1.2.1)
+    ember-data-source (0.0.5)
+      ember-source
+    ember-rails (0.11.1)
+      active_model_serializers
+      barber (>= 0.4.1)
+      ember-data-source
+      ember-source
+      execjs (>= 1.2)
+      railties (>= 3.1)
+    ember-source (0.0.1)
+      handlebars-source (>= 1.0.0.rc3, < 1.0.0.rc4)
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (1.4.0)
@@ -68,13 +85,7 @@ GEM
     geocoder (1.1.6)
     gherkin (2.11.6)
       json (>= 1.7.6)
-    haml (4.0.0)
-      tilt
-    haml-rails (0.4)
-      actionpack (>= 3.1, < 4.1)
-      activesupport (>= 3.1, < 4.1)
-      haml (>= 3.1, < 4.1)
-      railties (>= 3.1, < 4.1)
+    handlebars-source (1.0.0.rc3)
     hike (1.2.1)
     httparty (0.10.2)
       multi_json (~> 1.0)
@@ -181,9 +192,9 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0.beta1)
   cucumber-rails
   database_cleaner
+  ember-rails
   foreman
   geocoder
-  haml-rails
   httparty
   jbuilder (~> 1.0.1)
   jquery-rails
