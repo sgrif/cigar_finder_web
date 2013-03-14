@@ -1,4 +1,6 @@
 class CigarStoreSearch
+  class StoreNotFound < RuntimeError; end
+
   attr_reader :location
 
   def self.stores_near(location)
@@ -18,7 +20,7 @@ class CigarStoreSearch
   end
 
   def store_named(store_name)
-    results.find { |store| store.name == store_name }
+    results.find { |store| store.name == store_name } or raise(StoreNotFound)
   end
 
   protected

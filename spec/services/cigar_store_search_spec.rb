@@ -30,4 +30,10 @@ describe CigarStoreSearch do
     CigarStore.stub(:load_stores).with([cigar_store_attrs]) { [cigar_shop] }
     CigarStoreSearch.near(here).store_named('Cigar Shop').should == cigar_shop
   end
+
+  it 'raises an exception if no store has that name' do
+    OnlinePlaces.stub(:places_near)
+    CigarStore.stub(:load_stores) { [] }
+    expect { CigarStoreSearch.near(here).store_named('Not Real') }.to raise_exception(CigarStoreSearch::StoreNotFound)
+  end
 end
