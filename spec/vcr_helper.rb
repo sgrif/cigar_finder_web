@@ -1,4 +1,5 @@
 require 'vcr'
+require 'active_support/core_ext'
 
 VCR.configure do |config|
   config.cassette_library_dir = "fixtures/cassettes"
