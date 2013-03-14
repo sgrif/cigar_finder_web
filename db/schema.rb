@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130313190435) do
+ActiveRecord::Schema.define(version: 20130314004102) do
 
   create_table "cigar_stocks", force: true do |t|
     t.string   "store",      null: false
@@ -23,5 +23,13 @@ ActiveRecord::Schema.define(version: 20130313190435) do
 
   add_index "cigar_stocks", ["cigar"], name: "index_cigar_stocks_on_cigar"
   add_index "cigar_stocks", ["store", "cigar"], name: "index_cigar_stocks_on_store_and_cigar", unique: true
+
+  create_table "cigar_stores", force: true do |t|
+    t.string   "name"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
