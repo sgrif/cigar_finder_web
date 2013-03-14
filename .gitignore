@@ -23,3 +23,6 @@
 
 # Ignore VCR recordings
 /fixtures/cassettes
+
+# Ignore secrets
+.env

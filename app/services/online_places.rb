@@ -13,10 +13,24 @@ class OnlinePlaces
   end
 
   def results
-    @results ||= self.class.get('/nearbysearch/json', query: query).parsed_response['results']
+    @results ||= parse_results(raw_results)
   end
 
   private
+
+  def parse_results(places)
+    places.map do |place|
+      {
+        name: place['name'],
+        latitude: place['geometry']['location']['lat'],
+        longitude: place['geometry']['location']['lng']
+      }
+    end
+  end
+
+  def raw_results
+    @raw_results ||= self.class.get('/nearbysearch/json', query: query).parsed_response['results']
+  end
 
   def default_params
     {
