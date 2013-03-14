@@ -19,19 +19,23 @@ Then /^"(.*?)" should not be listed$/ do |store|
 end
 
 Given /^"([^"]*?)" carries "(.*?)"$/ do |store_name, cigar|
-  CigarStock.save_carried(store_name, cigar)
+  store = CigarStoreSearch.near(@location).store_named(store_name)
+  CigarStock.save_carried(store, cigar)
 end
 
 Given /^"(.*?)" in "(.*?)" carries "(.*?)"$/ do |store_name, location, cigar|
-  CigarStock.save_carried(store_name, cigar)
+  store = CigarStoreSearch.near(get_location(location)).store_named(store_name)
+  CigarStock.save_carried(store, cigar)
 end
 
 Given /^"([^"]*?)" does not carry "(.*?)"$/ do |store_name, cigar|
-  CigarStock.save_not_carried(store_name, cigar)
+  store = CigarStoreSearch.near(@location).store_named(store_name)
+  CigarStock.save_not_carried(store, cigar)
 end
 
 Given /^"(.*?)" in "(.*?)" does not carry "(.*?)"$/ do |store_name, location, cigar|
-  CigarStock.save_not_carried(store_name, cigar)
+  store = CigarStoreSearch.near(get_location(location)).store_named(store_name)
+  CigarStock.save_not_carried(store, cigar)
 end
 
 When /^I search for "([^"]*?)"$/ do |cigar|
