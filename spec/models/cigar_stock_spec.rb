@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe CigarStock do
   let(:montes) { CigarStore.create!(name: "Monte's") }
+  let(:vcut) { CigarStore.create!(name: 'The V-Cut Cigar Lounge') }
 
   it 'remembers cigars are carried' do
-    vcut = CigarStore.create!(name: 'The V-Cut Cigar Lounge')
     CigarStock.save_carried(vcut, 'Tatuaje 7th Reserva')
     CigarStock.cigar_carried?(vcut, 'Tatuaje 7th Reserva').should be_true
   end
@@ -28,5 +28,15 @@ describe CigarStock do
     CigarStock.save_carried(montes, 'The Mummy')
     expect { CigarStock.save_not_carried(montes, 'The Mummy') }.not_to change(CigarStock, :count)
     CigarStock.cigar_carried?(montes, 'The Mummy').should be_false
+  end
+
+  it 'only performs one query' do
+    cigar = 'Tatuaje Black Petit Lancero'
+    CigarStock.save_carried(montes, cigar)
+    CigarStock.should_receive(:where).with(cigar_store_id: [montes, vcut], cigar: cigar).once.and_call_original
+    CigarStock.search_records([montes, vcut], cigar) do
+      CigarStock.cigar_carried?(montes, cigar).should be_true
+      expect { CigarStock.cigar_carried?(vcut, cigar) }.to raise_exception(CigarStock::NoAnswer)
+    end
   end
 end

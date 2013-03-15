@@ -6,7 +6,15 @@ class CigarSearch
   end
 
   def results
-    @results ||= stores.map do |store|
+    @results ||= CigarStock.search_records(stores, cigar) { load_results }
+  end
+
+  class NoAnswer; end
+
+  private
+
+  def load_results
+    stores.map do |store|
       carried = begin
                   CigarStock.cigar_carried?(store, cigar)
                 rescue CigarStock::NoAnswer
@@ -15,6 +23,4 @@ class CigarSearch
       CigarSearchResult.new(store, carried)
     end
   end
-
-  class NoAnswer; end
 end

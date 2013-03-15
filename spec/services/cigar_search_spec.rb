@@ -6,6 +6,10 @@ class CigarStock
 end
 
 describe CigarSearch do
+  before do
+    CigarStock.stub(:search_records).and_yield
+  end
+
   it "searches for stores with a cigar in stock" do
     search = CigarSearch.new('Tatuaje 7th Reserva', %w(Monte's Stag))
     CigarStock.stub(:cigar_carried?).with("Monte's", 'Tatuaje 7th Reserva') { true }
