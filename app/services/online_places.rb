@@ -13,13 +13,13 @@ class OnlinePlaces
   end
 
   def results
-    @results ||= parse_results(raw_results)
+    @results ||= parse_results
   end
 
   private
 
-  def parse_results(places)
-    places.map do |place|
+  def parse_results
+    raw_results.map do |place|
       {
         name: place['name'],
         latitude: place['geometry']['location']['lat'],
