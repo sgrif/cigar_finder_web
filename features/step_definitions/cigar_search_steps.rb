@@ -39,17 +39,17 @@ Given /^"(.*?)" in "(.*?)" does not carry "(.*?)"$/ do |store_name, location, ci
 end
 
 When /^I search for "([^"]*?)"$/ do |cigar|
-  visit cigar_search_path(cigar: cigar, latitude: @location.latitude, longitude: @location.longitude, format: :json)
-  @search = ActiveSupport::JSON.decode(page.source).fetch('results')
+  visit cigar_search_results_path(cigar: cigar, latitude: @location.latitude, longitude: @location.longitude, format: :json)
+  @search = ActiveSupport::JSON.decode(page.source).fetch('cigar_search_results')
 end
 
 When /^I search for "(.*?)" in "(.*?)"$/ do |cigar, location|
-  visit cigar_search_path(cigar: cigar, latitude: get_location(location).latitude, longitude: get_location(location).longitude, format: :json)
-  @search = ActiveSupport::JSON.decode(page.source).fetch('results')
+  visit cigar_search_results_path(cigar: cigar, latitude: get_location(location).latitude, longitude: get_location(location).longitude, format: :json)
+  @search = ActiveSupport::JSON.decode(page.source).fetch('cigar_search_results')
 end
 
 def assert_answer(store_name, answer)
-  @search.find { |result| result.fetch('store') == store_name }.fetch('carried').should == answer
+  @search.find { |result| result.fetch('cigar_store').fetch('name') == store_name }.fetch('carried').should == answer
 end
 
 Then /^I should see it is carried by "(.*?)"$/ do |store_name|

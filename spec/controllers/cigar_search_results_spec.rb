@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CigarSearchesController do
+describe CigarSearchResultsController do
   let(:cigar_store_attributes) { { name: "Jim's Cigars", latitude: 3, longitude: 4 } }
   let(:cigar_store) { stub_model(CigarStore, cigar_store_attributes) }
 
@@ -10,8 +10,8 @@ describe CigarSearchesController do
 
   it 'shows nearby stocks for cigars' do
     CigarSearch.any_instance.stub(:results) { [{store: cigar_store, carried: true}] }
-    get :show, longitude: 1, latitude: 2, cigar: 'Tatuaje 7th Reserva', format: :json
-    response.should render_template('show')
+    get :index, longitude: 1, latitude: 2, cigar: 'Tatuaje 7th Reserva', format: :json
+    response.should render_template('index')
     response.code.should == '200'
   end
 end

@@ -1,2 +1,2 @@
-class CigarSearchResult < Struct.new(:store, :carried)
+class CigarSearchResult < Struct.new(:store, :cigar, :carried)
 end

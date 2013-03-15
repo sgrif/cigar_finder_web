@@ -1,5 +1,5 @@
 CigarFinderWeb::Application.routes.draw do
-  resource 'cigar_search'
+  resources 'cigar_search_results'
 
   root to: 'main#index'
 end

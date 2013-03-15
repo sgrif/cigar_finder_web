@@ -20,7 +20,7 @@ class CigarSearch
                 rescue CigarStock::NoAnswer
                   NoAnswer
                 end
-      CigarSearchResult.new(store, carried)
+      CigarSearchResult.new(store, cigar, carried)
     end
   end
 end
