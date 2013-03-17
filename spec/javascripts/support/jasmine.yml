@@ -16,3 +16,4 @@ spec_dir: spec/javascripts
 
 asset_paths:
   - vendor/assets/javascripts
+  - app/assets/templates

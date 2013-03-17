@@ -40,12 +40,12 @@ end
 
 When /^I search for "([^"]*?)"$/ do |cigar|
   visit cigar_search_results_path(cigar: cigar, latitude: @location.latitude, longitude: @location.longitude, format: :json)
-  @search = ActiveSupport::JSON.decode(page.source).fetch('cigar_search_results')
+  @search = ActiveSupport::JSON.decode(page.source)
 end
 
 When /^I search for "(.*?)" in "(.*?)"$/ do |cigar, location|
   visit cigar_search_results_path(cigar: cigar, latitude: get_location(location).latitude, longitude: get_location(location).longitude, format: :json)
-  @search = ActiveSupport::JSON.decode(page.source).fetch('cigar_search_results')
+  @search = ActiveSupport::JSON.decode(page.source)
 end
 
 def assert_answer(store_name, answer)
