@@ -8,6 +8,6 @@
 <h2><%= @cigar %></h2>
 <ul>
 <% for result in @results.models: %>
-	<li><%= result.get('cigar_store').name %>: <%= result.get('carried') %></li>
+	<li><%= result.get('cigar_store').name %>: <%= result.carriedDescription() %></li>
 <% end %>
 </ul>
