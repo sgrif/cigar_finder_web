@@ -3,5 +3,6 @@ CigarFinderWeb::Application.routes.draw do
 
   mount JasmineRails::Engine => "/specs" unless Rails.env.production?
 
+  get '*anything' => 'main#index'
   root to: 'main#index'
 end

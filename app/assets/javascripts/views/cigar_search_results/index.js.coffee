@@ -1,7 +1,7 @@
 class CigarFinderWeb.Views.CigarSearchResultsIndex extends Backbone.View
   template: JST['cigar_search_results/index']
   events:
-    'submit #new_search': 'performSearch'
+    'submit #new_search': 'submitSearch'
   className: 'row'
 
   initialize: ->
@@ -11,10 +11,13 @@ class CigarFinderWeb.Views.CigarSearchResultsIndex extends Backbone.View
     $(@el).html(@template(results: @collection, cigar: @cigar))
     this
 
-  performSearch: (e) ->
+  submitSearch: (e) ->
     e.preventDefault()
+    Backbone.history.navigate(encodeURIComponent($('#new_search_cigar').val()), trigger: true)
+
+  performSearch: (cigar) ->
     @loadLocation (position) =>
-      @cigar = $('#new_search_cigar').val()
+      @cigar = cigar
       lat = position.coords.latitude
       lon = position.coords.longitude
       @collection.fetch(data: {cigar: @cigar, latitude: lat, longitude: lon})

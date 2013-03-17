@@ -5,7 +5,7 @@ window.CigarFinderWeb =
   Routers: {}
   initialize: ->
     new CigarFinderWeb.Routers.CigarSearchResults()
-    Backbone.history.start()
+    Backbone.history.start(pushState: true)
 
 $(document).ready ->
   CigarFinderWeb.initialize()
