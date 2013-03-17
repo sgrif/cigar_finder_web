@@ -1,13 +1,14 @@
 <h1>Cigar Finder</h1>
 
-<form id="new_search">
-	<input type="text" name="cigar" id="new_search_cigar" />
-	<input type="submit" value="Find it" />
+<form id="new_search" class="form-search">
+	<input type="text" name="cigar" id="new_search_cigar" class="input-medium search-query"/>
+	<input type="submit" value="Find it" class="btn" />
 </form>
 
 <h2><%= @cigar %></h2>
-<ul>
+<dl class='dl-horizontal'>
 <% for result in @results.models: %>
-	<li><%= result.get('cigar_store').name %>: <%= result.carriedDescription() %></li>
+	<dt><%= result.get('cigar_store').name %></dt>
+	<dd><%= result.carriedDescription() %></dd>
 <% end %>
-</ul>
+</dl>

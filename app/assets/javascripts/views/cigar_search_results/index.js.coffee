@@ -2,6 +2,7 @@ class CigarFinderWeb.Views.CigarSearchResultsIndex extends Backbone.View
   template: JST['cigar_search_results/index']
   events:
     'submit #new_search': 'performSearch'
+  className: 'row'
 
   initialize: ->
     @collection.on('reset', @render, this)
