@@ -15,7 +15,7 @@ end
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.0.1'
-gem 'ember-rails'
+gem 'backbone-on-rails'
 
 gem 'thin'
 
