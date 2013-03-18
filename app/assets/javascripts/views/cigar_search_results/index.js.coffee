@@ -7,9 +7,15 @@ class CigarFinderWeb.Views.CigarSearchResultsIndex extends Backbone.View
   initialize: ->
     @collection.on('reset', @render, this)
 
-  render: ->
-    $(@el).html(@template(results: @collection, cigar: @cigar))
+  render: =>
+    $(@el).html(@template(cigar: @cigar))
+    @loadMap()
+    @collection.each(@addResult)
     this
+
+  addResult: (result) =>
+    view = new CigarFinderWeb.Views.CigarSearchResult(model: result, map: @map)
+    @$('#search-results').append(view.render().el)
 
   submitSearch: (e) ->
     e.preventDefault()
@@ -23,7 +29,15 @@ class CigarFinderWeb.Views.CigarSearchResultsIndex extends Backbone.View
       @collection.fetch(data: {cigar: @cigar, latitude: lat, longitude: lon})
 
   loadLocation: (callback) ->
-    callback(@position) if @position?
+    return callback(@position) if @position?
     navigator.geolocation.getCurrentPosition (position) =>
       @position = position
       callback(@position)
+
+  loadMap: =>
+    @loadLocation (position) =>
+      center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
+      @map = new google.maps.Map @$('#map-canvas')[0],
+        center: center
+        zoom: 10
+        mapTypeId: google.maps.MapTypeId.ROADMAP

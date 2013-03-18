@@ -5,10 +5,10 @@
 	<input type="submit" value="Find it" class="btn" />
 </form>
 
-<h2><%= @cigar %></h2>
-<dl class='dl-horizontal'>
-<% for result in @results.models: %>
-	<dt><%= result.get('cigar_store').name %></dt>
-	<dd><%= result.carriedDescription() %></dd>
-<% end %>
-</dl>
+<div class='span4'>
+	<h2><%= @cigar %></h2>
+	<dl class='dl-horizontal' id='search-results'>
+	</dl>
+</div>
+
+<div id='map-canvas' class='span8' style='height: 600px'></div>
