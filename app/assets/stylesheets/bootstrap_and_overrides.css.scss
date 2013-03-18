@@ -1,2 +1,8 @@
 @import "bootstrap";
 @import "bootstrap/responsive";
+
+#map-canvas {
+   img {
+     max-width: none;
+   }
+ }

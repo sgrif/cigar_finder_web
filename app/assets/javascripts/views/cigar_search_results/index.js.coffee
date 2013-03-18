@@ -14,7 +14,8 @@ class CigarFinderWeb.Views.CigarSearchResultsIndex extends Backbone.View
     this
 
   addResult: (result) =>
-    view = new CigarFinderWeb.Views.CigarSearchResult(model: result, map: @map)
+    @children ||= []
+    @children.push(view = new CigarFinderWeb.Views.CigarSearchResult(model: result, map: @map, parent: this))
     @$('#search-results').append(view.render().el)
 
   submitSearch: (e) ->
@@ -41,3 +42,6 @@ class CigarFinderWeb.Views.CigarSearchResultsIndex extends Backbone.View
         center: center
         zoom: 10
         mapTypeId: google.maps.MapTypeId.ROADMAP
+
+  closeAllInfoWindows: =>
+    view.closeInfoWindow() for view in @children
