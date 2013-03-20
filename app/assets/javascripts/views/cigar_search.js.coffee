@@ -11,7 +11,20 @@ class CigarFinderWeb.Views.CigarSearch extends Backbone.View
 
   submitSearch: (e) =>
     e.preventDefault()
+    cigar_input = @$('#new-search-cigar')
+    @performSearch(cigar_input.val())
+    $(e.currentTarget)[0].reset()
 
-  loadLocation: =>
+  performSearch: (cigar) =>
+    @$('#js-cigar-name').html(cigar)
+    @collection.fetch
+      data:
+        cigar: cigar
+        latitude: @position.latitude
+        longitude: @position.longitude
+
+  loadLocation: (callback = ->) =>
+    callback() if @position?
     navigator.geolocation.getCurrentPosition (position) =>
       @position = position.coords
+      callback()

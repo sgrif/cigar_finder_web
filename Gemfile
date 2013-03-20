@@ -29,7 +29,8 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
-  gem 'jasmine-rails'
+  gem 'jasmine'
+  gem 'jasminerice', github: 'bradphelan/jasminerice'
 end
 
 group :test do
