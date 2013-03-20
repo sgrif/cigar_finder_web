@@ -14,17 +14,23 @@ class CigarFinderWeb.Views.CigarSearch extends Backbone.View
     @$('#js-cigar-search-results').append(resultsView.render().el)
     this
 
+  encodeCigarName: (cigar_name) =>
+    encodeURIComponent(cigar_name).replace(/(%20)+/g, "+")
+
   submitSearch: (e) =>
     e.preventDefault()
-    @performSearch(@$('#new-search-cigar').val())
+    cigar_name = @$('#new-search-cigar').val()
+    @performSearch(cigar_name)
+    Backbone.history.navigate(@encodeCigarName(cigar_name), trigger: false)
 
   performSearch: (cigar) =>
-    @cigar = cigar
-    @collection.fetch
-      data:
-        cigar: cigar
-        latitude: @position.latitude
-        longitude: @position.longitude
+    @loadLocation =>
+      @cigar = cigar
+      @collection.fetch
+        data:
+          cigar: cigar
+          latitude: @position.latitude
+          longitude: @position.longitude
 
   searchLoaded: =>
     @$('#js-cigar-name').html(@cigar)

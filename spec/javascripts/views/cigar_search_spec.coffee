@@ -11,6 +11,16 @@ describe 'CigarFinderWeb.Views.CigarSearch', ->
       callback(coords: {latitude: 1, longitude: -1})
     renderView()
 
+  describe 'encodeCigarName', =>
+    it 'replaces spaces with +', =>
+      expect(view.encodeCigarName("Tatuaje 7th Reserva")).toBe("Tatuaje+7th+Reserva")
+
+    it 'squashes multiple spaces', =>
+      expect(view.encodeCigarName("Illusione   MK4")).toBe("Illusione+MK4")
+
+    it 'escapes uri unsafe characters', =>
+      expect(view.encodeCigarName("Jake & Harley's Cigar")).toBe("Jake+%26+Harley's+Cigar")
+
   describe 'render', =>
     it 'loads the users location', =>
       expect(navigator.geolocation.getCurrentPosition).toHaveBeenCalled()
@@ -34,6 +44,7 @@ describe 'CigarFinderWeb.Views.CigarSearch', ->
     beforeEach =>
       spyOn(collection, 'fetch').andCallFake =>
         collection.reset()
+      spyOn(Backbone.history, 'navigate')
 
     performSearch = (cigar) =>
       $el.find('#new-search-cigar').val(cigar)
@@ -54,3 +65,8 @@ describe 'CigarFinderWeb.Views.CigarSearch', ->
     it 'displays the cigar name', =>
       performSearch('Illusione MK4')
       expect($el.find('#js-cigar-name').html()).toBe('Illusione MK4')
+
+    it 'changes the url', =>
+      performSearch('Tatuaje 7th Reserva')
+      expect(Backbone.history.navigate).toHaveBeenCalledWith "Tatuaje+7th+Reserva",
+        trigger: false
