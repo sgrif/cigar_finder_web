@@ -1,12 +1,15 @@
 describe 'CigarFinderWeb.Views.CigarSearch', ->
   [collection, view, $el] = []
 
-  beforeEach =>
-    spyOn(navigator.geolocation, 'getCurrentPosition').andCallFake (callback) ->
-      callback(coords: {latitude: 1, longitude: -1})
+  renderView = =>
     collection = new Backbone.Collection()
     view = new CigarFinderWeb.Views.CigarSearch(collection: collection)
     $el = $(view.render().el)
+
+  beforeEach =>
+    spyOn(navigator.geolocation, 'getCurrentPosition').andCallFake (callback) ->
+      callback(coords: {latitude: 1, longitude: -1})
+    renderView()
 
   describe 'render', =>
     it 'loads the users location', =>
@@ -18,9 +21,19 @@ describe 'CigarFinderWeb.Views.CigarSearch', ->
       expect(form).toContain('input#new-search-cigar')
       expect(form).toContain('input[type=submit][value="Find it"]')
 
+    it 'displays a results view', =>
+      mockView = new Backbone.View()
+      spyOn(mockView, 'render').andReturn(el: 'I am a mock results view')
+      spyOn(CigarFinderWeb.Views, 'CigarSearchResultsIndex').andReturn(mockView)
+      renderView()
+      expect(CigarFinderWeb.Views.CigarSearchResultsIndex).toHaveBeenCalledWith
+        collection: collection
+      expect($el.find('#js-cigar-search-results')).toContainHtml('I am a mock results view')
+
   describe 'performing a search', =>
     beforeEach =>
-      spyOn(collection, 'fetch')
+      spyOn(collection, 'fetch').andCallFake =>
+        collection.reset()
 
     performSearch = (cigar) =>
       $el.find('#new-search-cigar').val(cigar)

@@ -4,24 +4,31 @@ class CigarFinderWeb.Views.CigarSearch extends Backbone.View
     'submit #new-search': 'submitSearch'
   className: 'row'
 
+  initialize: =>
+    @collection.on('reset', @searchLoaded)
+
   render: =>
     @loadLocation()
     @$el.html(@template())
+    resultsView = new CigarFinderWeb.Views.CigarSearchResultsIndex(collection: @collection)
+    @$('#js-cigar-search-results').append(resultsView.render().el)
     this
 
   submitSearch: (e) =>
     e.preventDefault()
-    cigar_input = @$('#new-search-cigar')
-    @performSearch(cigar_input.val())
-    $(e.currentTarget)[0].reset()
+    @performSearch(@$('#new-search-cigar').val())
 
   performSearch: (cigar) =>
-    @$('#js-cigar-name').html(cigar)
+    @cigar = cigar
     @collection.fetch
       data:
         cigar: cigar
         latitude: @position.latitude
         longitude: @position.longitude
+
+  searchLoaded: =>
+    @$('#js-cigar-name').html(@cigar)
+    @$('#new-search')[0].reset()
 
   loadLocation: (callback = ->) =>
     callback() if @position?
