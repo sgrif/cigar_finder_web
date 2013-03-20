@@ -1,0 +1,11 @@
+<h1>Cigar Finder</h1>
+
+<form id="new-search" class="form-search">
+  <input type="text" name="cigar" id="new-search-cigar" class="input-medium search-query"/>
+  <input type="submit" value="Find it" class="btn" />
+</form>
+
+<div class="span4" id="js-cigar-search-results">
+  <h2><%= @cigar %></h2>
+</div>
+<div class="span8" id="js-map-canvas"></div>
