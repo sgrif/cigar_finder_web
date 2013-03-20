@@ -2,11 +2,11 @@ class CigarStock < ActiveRecord::Base
   belongs_to :cigar_store
 
   def self.save_carried(store, cigar)
-    where(cigar_store_id: store, cigar: cigar).first_or_initialize.send(:update_carried, true)
+    where(cigar_store_id: store, cigar: cigar.downcase).first_or_initialize.send(:update_carried, true)
   end
 
   def self.save_not_carried(store, cigar)
-    where(cigar_store_id: store, cigar: cigar).first_or_initialize.send(:update_carried, false)
+    where(cigar_store_id: store, cigar: cigar.downcase).first_or_initialize.send(:update_carried, false)
   end
 
   def self.cigar_carried?(store, cigar)
@@ -15,7 +15,7 @@ class CigarStock < ActiveRecord::Base
   end
 
   def self.search_records(stores, cigar)
-    @records_to_search = where(cigar_store_id: stores.to_a, cigar: cigar)
+    @records_to_search = where(cigar_store_id: stores.to_a, cigar: cigar.downcase)
     yield
   ensure
     @records_to_search = nil
@@ -26,7 +26,7 @@ class CigarStock < ActiveRecord::Base
   private
 
   def self.find_record(store, cigar)
-    return where(cigar_store_id: store, cigar: cigar).first unless @records_to_search
+    return where(cigar_store_id: store, cigar: cigar.downcase).first unless @records_to_search
     @records_to_search.find { |record| record.cigar_store_id == store.id }
   end
 

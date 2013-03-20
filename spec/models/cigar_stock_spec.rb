@@ -33,10 +33,15 @@ describe CigarStock do
   it 'only performs one query' do
     cigar = 'Tatuaje Black Petit Lancero'
     CigarStock.save_carried(montes, cigar)
-    CigarStock.should_receive(:where).with(cigar_store_id: [montes, vcut], cigar: cigar).once.and_call_original
+    CigarStock.should_receive(:where).with(cigar_store_id: [montes, vcut], cigar: cigar.downcase).once.and_call_original
     CigarStock.search_records([montes, vcut], cigar) do
       CigarStock.cigar_carried?(montes, cigar).should be_true
       expect { CigarStock.cigar_carried?(vcut, cigar) }.to raise_exception(CigarStock::NoAnswer)
     end
+  end
+
+  it 'is case insensitive' do
+    CigarStock.save_carried(montes, 'Tatuaje Black Petit Lancero')
+    CigarStock.cigar_carried?(montes, 'tatuaje black petit lancero').should be_true
   end
 end
