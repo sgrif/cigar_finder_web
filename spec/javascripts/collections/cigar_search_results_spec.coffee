@@ -2,12 +2,12 @@ describe "CigarFinderWeb.Collections.CigarSearchResults", ->
   [collection] = []
 
   beforeEach =>
+    spyOn(navigator.geolocation, 'getCurrentPosition')
     collection = new CigarFinderWeb.Collections.CigarSearchResults()
     spyOn(collection, 'fetch')
 
   describe "fetching user position", =>
     it "has a timeout of 10 seconds", =>
-      spyOn(navigator.geolocation, 'getCurrentPosition')
       collection.fetchCigar('Anything')
       expect(navigator.geolocation.getCurrentPosition).toHaveBeenCalledWith(
         jasmine.any(Function),
@@ -17,7 +17,7 @@ describe "CigarFinderWeb.Collections.CigarSearchResults", ->
 
     describe "geolocation supported", =>
       it "performs an API call with user location", =>
-        spyOn(navigator.geolocation, 'getCurrentPosition').andCallFake (success) =>
+        navigator.geolocation.getCurrentPosition.andCallFake (success) =>
           success(coords: {latitude: 1, longitude: -1})
         collection.fetchCigar('Tatuaje 7th Reserva')
 
@@ -42,7 +42,7 @@ describe "CigarFinderWeb.Collections.CigarSearchResults", ->
 
     describe "geolocation times out", =>
       it "performs an API call without user location", =>
-        spyOn(navigator.geolocation, 'getCurrentPosition').andCallFake (s, error) =>
+        navigator.geolocation.getCurrentPosition.andCallFake (s, error) =>
           error()
         collection.fetchCigar('Liga Privada Undercrown')
         expect(collection.fetch).toHaveBeenCalledWith(data: {cigar: 'Liga Privada Undercrown'})
@@ -52,7 +52,7 @@ describe "CigarFinderWeb.Collections.CigarSearchResults", ->
       spyOn(collection, "sync").andCallFake () =>
         collection.reset([{cigar_store: "Monte's", cigar: collection.cigar, carried: true}])
       collection.fetch.andCallThrough()
-      spyOn(navigator.geolocation, 'getCurrentPosition').andCallFake (success, error) =>
+      navigator.geolocation.getCurrentPosition.andCallFake (success, error) =>
         error()
 
     it "only calls fetch once per cigar", =>
