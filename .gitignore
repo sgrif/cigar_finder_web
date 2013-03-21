@@ -26,3 +26,6 @@
 
 # Ignore secrets
 .env
+
+# Ignore reek configurations
+*.reek

@@ -12,10 +12,7 @@ class CigarStock < ActiveRecord::Base
   def self.load_stocks(stores, cigar)
     cigar_name = cigar.downcase
     cigar_stocks = where(cigar_store_id: stores.to_a, cigar: cigar_name).to_a
-    stores.map do |cigar_store|
-      existing_record = cigar_stocks.find { |stock| stock.cigar_store == cigar_store }
-      existing_record or create!(cigar_store: cigar_store, cigar: cigar_name, carried: nil)
-    end
+    stores.map { |cigar_store| load_stock(cigar_stocks, cigar_store, cigar_name) }
   end
 
   def self.cigar_carried?(cigar_store, cigar)
@@ -23,6 +20,13 @@ class CigarStock < ActiveRecord::Base
   end
 
   private
+
+  def self.load_stock(cigar_stocks, cigar_store, cigar_name)
+    existing_record = cigar_stocks.find { |stock| stock.cigar_store_id == cigar_store.id }
+    (existing_record or create!(cigar_store: cigar_store, cigar: cigar_name, carried: nil)).tap do |cigar_stock|
+      cigar_stock.cigar_store = cigar_store # Prevent additional query to load store
+    end
+  end
 
   def update_carried(new_carried)
     self.carried = new_carried
