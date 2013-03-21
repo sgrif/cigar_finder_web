@@ -2,13 +2,12 @@ describe 'CigarFinderWeb.Views.CigarSearch', ->
   [collection, view, $el] = []
 
   renderView = =>
-    collection = new Backbone.Collection()
+    collection = new CigarFinderWeb.Collections.CigarSearchResults()
+    spyOn(collection, 'fetchCigar')
     view = new CigarFinderWeb.Views.CigarSearch(collection: collection)
     $el = $(view.render().el)
 
   beforeEach =>
-    spyOn(navigator.geolocation, 'getCurrentPosition').andCallFake (callback) ->
-      callback(coords: {latitude: 1, longitude: -1})
     renderView()
 
   describe 'encodeCigarName', =>
@@ -22,9 +21,6 @@ describe 'CigarFinderWeb.Views.CigarSearch', ->
       expect(view.encodeCigarName("Jake & Harley's Cigar")).toBe("Jake+%26+Harley's+Cigar")
 
   describe 'render', =>
-    it 'loads the users location', =>
-      expect(navigator.geolocation.getCurrentPosition).toHaveBeenCalled()
-
     it 'displays a search form', =>
       expect($el).toContain('form#new-search')
       form = $el.find('form#new-search')
@@ -42,7 +38,7 @@ describe 'CigarFinderWeb.Views.CigarSearch', ->
 
   describe 'performing a search', =>
     beforeEach =>
-      spyOn(collection, 'fetch').andCallFake =>
+      collection.fetchCigar.andCallFake =>
         collection.reset()
       spyOn(Backbone.history, 'navigate')
 
@@ -52,11 +48,7 @@ describe 'CigarFinderWeb.Views.CigarSearch', ->
 
     it 'queries the api', =>
       performSearch('Tatuaje 7th Reserva')
-      expect(collection.fetch).toHaveBeenCalledWith
-        data:
-          cigar: 'Tatuaje 7th Reserva'
-          latitude: 1
-          longitude: -1
+      expect(collection.fetchCigar).toHaveBeenCalledWith('Tatuaje 7th Reserva')
 
     it 'resets the form', =>
       performSearch('Anything')
