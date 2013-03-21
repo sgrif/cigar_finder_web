@@ -46,3 +46,24 @@ describe "CigarFinderWeb.Collections.CigarSearchResults", ->
           error()
         collection.fetchCigar('Liga Privada Undercrown')
         expect(collection.fetch).toHaveBeenCalledWith(data: {cigar: 'Liga Privada Undercrown'})
+
+  describe "fetching a cigar", =>
+    beforeEach =>
+      spyOn(collection, "sync").andCallFake () =>
+        collection.reset([{cigar_store: "Monte's", cigar: collection.cigar, carried: true}])
+      collection.fetch.andCallThrough()
+      spyOn(navigator.geolocation, 'getCurrentPosition').andCallFake (success, error) =>
+        error()
+
+    it "only calls fetch once per cigar", =>
+      collection.fetchCigar('Tatuaje 7th Reserva')
+      expect(collection.fetch).toHaveBeenCalledWith(data: {cigar: 'Tatuaje 7th Reserva'})
+      collection.fetchCigar('Tatuaje 7th Reserva')
+      expect(collection.fetch.callCount).toBe(1)
+
+    it "caches a copy of its models", =>
+      collection.fetchCigar('Tatuaje 7th Reserva')
+      collection.fetchCigar('Illusione MK4')
+      collection.fetchCigar('Tatuaje 7th Reserva')
+      expect(collection.at(0)).toBeDefined()
+      expect(collection.at(0).get('cigar')).toBe('Tatuaje 7th Reserva')
