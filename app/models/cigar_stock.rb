@@ -9,26 +9,20 @@ class CigarStock < ActiveRecord::Base
     where(cigar_store_id: store, cigar: cigar.downcase).first_or_initialize.send(:update_carried, false)
   end
 
-  def self.cigar_carried?(store, cigar)
-    record = find_record(store, cigar) or raise NoAnswer
-    record.carried
+  def self.load_stocks(stores, cigar)
+    cigar_name = cigar.downcase
+    cigar_stocks = where(cigar_store_id: stores.to_a, cigar: cigar_name).to_a
+    stores.map do |cigar_store|
+      existing_record = cigar_stocks.find { |stock| stock.cigar_store == cigar_store }
+      existing_record or create!(cigar_store: cigar_store, cigar: cigar_name, carried: nil)
+    end
   end
 
-  def self.search_records(stores, cigar)
-    @records_to_search = where(cigar_store_id: stores.to_a, cigar: cigar.downcase)
-    yield
-  ensure
-    @records_to_search = nil
+  def self.cigar_carried?(cigar_store, cigar)
+    where(cigar_store_id: cigar_store, cigar: cigar.downcase).first_or_create!.carried
   end
-
-  class NoAnswer < RuntimeError; end
 
   private
-
-  def self.find_record(store, cigar)
-    return where(cigar_store_id: store, cigar: cigar.downcase).first unless @records_to_search
-    @records_to_search.find { |record| record.cigar_store_id == store.id }
-  end
 
   def update_carried(new_carried)
     self.carried = new_carried
