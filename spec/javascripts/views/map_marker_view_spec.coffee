@@ -6,6 +6,9 @@ describe "CigarFinderWeb.Views.MapMarkerView", =>
       maps:
         LatLng: ->
         Marker: ->
+        events:
+          addListener: ->
+
     spyOn(google.maps, "LatLng").andCallFake (lat, lng) ->
       {lat: lat, lng: lng}
     marker = jasmine.createSpyObj("marker", ["setMap"])
@@ -15,7 +18,12 @@ describe "CigarFinderWeb.Views.MapMarkerView", =>
     view = new CigarFinderWeb.Views.MapMarkerView(model: model)
 
   describe "cigar is carried by store", =>
+    mockView = null
+
     beforeEach =>
+      mockView = jasmine.createSpyObj('MapInfoWindowView', ['render'])
+      spyOn(CigarFinderWeb.Views, 'MapInfoWindowView').andReturn(mockView)
+      spyOn(google.maps.events, 'addListener')
       model.set("carried", true)
       view.render(map)
 
@@ -29,6 +37,16 @@ describe "CigarFinderWeb.Views.MapMarkerView", =>
         position: {lat: 1, lng: -1}
         map: map
         title: "Jim's Cigars"
+
+    it "has an infowindow", =>
+      expect(CigarFinderWeb.Views.MapInfoWindowView).toHaveBeenCalledWith
+        model: model.get('cigar_store')
+
+    it "opens its info window when clicked", =>
+      expect(google.maps.events.addListener).toHaveBeenCalledWith(
+        view.marker, 'click', view.openInfoWindow)
+      view.openInfoWindow()
+      expect(mockView.render).toHaveBeenCalledWith(marker)
 
   describe "cigar is not carried by store", =>
     beforeEach =>
