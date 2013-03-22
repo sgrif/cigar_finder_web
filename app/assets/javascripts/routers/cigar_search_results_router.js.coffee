@@ -4,9 +4,9 @@ class CigarFinderWeb.Routers.CigarSearchResults extends Backbone.Router
     ':cigar_name': 'performSearch'
 
   index: ->
-    @collection = new CigarFinderWeb.Collections.CigarSearchResults()
+    @collection ||= new CigarFinderWeb.Collections.CigarSearchResults()
+    @collection.reset()
     @view = new CigarFinderWeb.Views.CigarSearch(collection: @collection)
-    window.the_view = @view
     $('#container').html(@view.render().el)
 
   performSearch: (cigar_name) ->
