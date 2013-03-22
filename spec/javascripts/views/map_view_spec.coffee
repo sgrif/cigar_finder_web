@@ -31,3 +31,24 @@ describe "CigarFinderWeb.Views.MapView", ->
     it "only renders the map once", =>
       collection.reset()
       expect(google.maps.Map.callCount).toBe(1)
+
+    describe "marker views", =>
+      mockMarker = null
+
+      beforeEach =>
+        mockMarker = new Backbone.View()
+        spyOn(mockMarker, "render")
+        spyOn(mockMarker, "remove")
+        spyOn(CigarFinderWeb.Views, "MapMarkerView").andReturn(mockMarker)
+
+      it "creates marker views", =>
+        [firstModel, secondModel] = [new Backbone.Model(), new Backbone.Model()]
+        collection.reset([firstModel, secondModel])
+        expect(CigarFinderWeb.Views.MapMarkerView).toHaveBeenCalledWith(model: firstModel)
+        expect(mockMarker.render).toHaveBeenCalledWith(view.map)
+        expect(CigarFinderWeb.Views.MapMarkerView).toHaveBeenCalledWith(model: secondModel)
+
+      it "removes existing marker views", =>
+        collection.reset([new Backbone.Model()])
+        collection.reset()
+        expect(mockMarker.remove).toHaveBeenCalled()
