@@ -1,14 +1,19 @@
 class CigarFinderWeb.Views.MapMarkerView extends Backbone.View
   render: (map) =>
-    if @model.get('carried')
-      @marker = new google.maps.Marker
-        position: @getLatLng()
-        map: map
-        title: @model.get('cigar_store').name
+    @renderMarker(map) if @model.get('carried')
+
+  renderMarker: (map) =>
+    @marker ||= new google.maps.Marker
+      position: @getLatLng()
+      map: map
+      title: @model.get('cigar_store').name
 
   remove: =>
-    @marker.setMap(null) if @marker?
+    @removeMarker()
     super()
+
+  removeMarker: =>
+    @marker.setMap(null) if @marker?
 
   getLatLng: =>
     lat = @model.get('cigar_store').latitude
