@@ -11,6 +11,8 @@ class CigarFinderWeb.Views.CigarSearch extends Backbone.View
     @$el.html(@template())
     resultsView = new CigarFinderWeb.Views.CigarSearchResultsIndex(collection: @collection)
     @$('#js-cigar-search-results').append(resultsView.render().el)
+    mapView = new CigarFinderWeb.Views.MapView(collection: @collection)
+    @$('#js-cigar-map').append(mapView.render().el)
     this
 
   encodeCigarName: (cigar_name) =>

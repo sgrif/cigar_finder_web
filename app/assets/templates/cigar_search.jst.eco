@@ -8,4 +8,4 @@
 <div class="span4" id="js-cigar-search-results">
   <h2 id="js-cigar-name"></h2>
 </div>
-<div class="span8" id="js-map-canvas"></div>
+<div class="span8" id="js-cigar-map"></div>
