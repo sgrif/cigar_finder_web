@@ -8,7 +8,7 @@ class CigarFinderWeb.Views.MapMarkerView extends Backbone.View
       map: map
       title: @model.get('cigar_store').name
     @infoWindow ||= new CigarFinderWeb.Views.MapInfoWindowView(model: @model.get('cigar_store'))
-    google.maps.events.addListener(@marker, 'click', @openInfoWindow)
+    google.maps.event.addListener(@marker, 'click', @openInfoWindow)
 
   remove: =>
     @removeMarker()
