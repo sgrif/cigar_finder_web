@@ -40,4 +40,4 @@ class CigarFinderWeb.Collections.CigarSearchResults extends Backbone.Collection
     onSuccess = (position) =>
       @position = position.coords
       success()
-    navigator.geolocation.getCurrentPosition(onSuccess, error, {timeout: 10000})
+    navigator.geolocation.getCurrentPosition(onSuccess, error, {timeout: 5000})

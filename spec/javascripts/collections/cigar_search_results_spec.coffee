@@ -7,12 +7,12 @@ describe "CigarFinderWeb.Collections.CigarSearchResults", ->
     spyOn(collection, 'fetch')
 
   describe "fetching user position", =>
-    it "has a timeout of 10 seconds", =>
+    it "has a timeout of 5 seconds", =>
       collection.fetchCigar('Anything')
       expect(navigator.geolocation.getCurrentPosition).toHaveBeenCalledWith(
         jasmine.any(Function),
         jasmine.any(Function),
-        {timeout: 10000}
+        {timeout: 5000}
       )
 
     describe "geolocation supported", =>
