@@ -1,0 +1,14 @@
+<li id='js-results-list-carried'>
+  <h3>Carried By</h3>
+  <ul></ul>
+</li>
+
+<li id='js-results-list-not-carried'>
+  <h3>Not Carried By</h3>
+  <ul></ul>
+</li>
+
+<li id='js-results-list-no-answer'>
+  <h3>No Information For</h3>
+  <ul></ul>
+</li>

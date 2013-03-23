@@ -1,4 +1,6 @@
 class CigarStore < ActiveRecord::Base
+  reverse_geocoded_by :latitude, :longitude
+
   def self.load_stores(stores_attrs)
     store_names = stores_attrs.collect { |attrs| attrs[:name] }
     cigar_stores = where(name: store_names)
