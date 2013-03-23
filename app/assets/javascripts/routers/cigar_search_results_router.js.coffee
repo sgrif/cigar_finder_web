@@ -4,12 +4,19 @@ class CigarFinderWeb.Routers.CigarSearchResults extends Backbone.Router
     ':cigar_name': 'performSearch'
 
   index: ->
-    @collection = new CigarFinderWeb.Collections.CigarSearchResults()
-    @view = new CigarFinderWeb.Views.CigarSearch(collection: @collection)
-    $('#container').html(@view.render().el)
+    view = new CigarFinderWeb.Views.Intro()
+    @fadeTo(view.render().el)
+
+  fadeTo: (html) ->
+    $container = $('#container')
+    $container.fadeOut =>
+      $container.html(html)
+      $container.fadeIn()
 
   performSearch: (cigar_name) ->
-    @index() unless @view?
+    @collection = new CigarFinderWeb.Collections.CigarSearchResults()
+    @view = new CigarFinderWeb.Views.CigarSearch(collection: @collection)
+    @fadeTo(@view.render().el)
     @view.performSearch(@decodeCigarName(cigar_name))
 
   decodeCigarName: (cigar_name) ->

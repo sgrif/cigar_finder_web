@@ -8,6 +8,36 @@
   }
 }
 
+.cigar-search-form {
+  @extend .form-search;
+
+  input[type=search] {
+    @extend .search-query;
+  }
+
+  .btn {
+    @extend .btn-primary;
+  }
+}
+
+.hero-unit {
+  input, .btn {
+    @extend .btn-large;
+  }
+}
+
+.intro-step {
+  display: none;
+  margin-top: 50px;
+}
+
+.intro-buttons {
+  a {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+
 .results-list {
   height: 500px;
   overflow-y: scroll;
