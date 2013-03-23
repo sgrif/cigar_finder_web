@@ -1,0 +1,1 @@
+<h6><%= @cigar_store.get('name') %></h6>

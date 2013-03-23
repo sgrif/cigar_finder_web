@@ -1,19 +1,18 @@
 describe "CigarFinderWeb.Views.MapMarkerView", =>
-  [model, view, map, marker] = []
+  [model, view, map, marker, cigarStore] = []
 
   beforeEach =>
     window.google =
       maps:
-        LatLng: ->
         Marker: ->
         event:
           addListener: ->
-
-    spyOn(google.maps, "LatLng").andCallFake (lat, lng) ->
-      {lat: lat, lng: lng}
     marker = jasmine.createSpyObj("marker", ["setMap"])
     spyOn(google.maps, "Marker").andReturn(marker)
-    model = new Backbone.Model(cigar_store: {name: "Jim's Cigars", latitude: 1, longitude: -1})
+    cigarStore = new Backbone.Model(name: "Jim's Cigars")
+    cigarStore.getPosition = ->
+    spyOn(cigarStore, 'getPosition').andReturn(lat: 1, lng: -1)
+    model = new Backbone.Model(cigar_store: cigarStore)
     map = jasmine.createSpy("map")
     view = new CigarFinderWeb.Views.MapMarkerView(model: model)
 
