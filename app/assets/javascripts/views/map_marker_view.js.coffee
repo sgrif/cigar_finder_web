@@ -4,9 +4,9 @@ class CigarFinderWeb.Views.MapMarkerView extends Backbone.View
 
   renderMarker: (map) =>
     @marker ||= new google.maps.Marker
-      position: @getLatLng()
+      position: @model.get('cigar_store').getPosition()
       map: map
-      title: @model.get('cigar_store').name
+      title: @model.get('cigar_store').get('name')
     @infoWindow ||= new CigarFinderWeb.Views.MapInfoWindowView(model: @model.get('cigar_store'))
     google.maps.event.addListener(@marker, 'click', @openInfoWindow)
 
@@ -19,8 +19,3 @@ class CigarFinderWeb.Views.MapMarkerView extends Backbone.View
 
   openInfoWindow: =>
     @infoWindow.render(@marker)
-
-  getLatLng: =>
-    lat = @model.get('cigar_store').latitude
-    lon = @model.get('cigar_store').longitude
-    new google.maps.LatLng(lat, lon)

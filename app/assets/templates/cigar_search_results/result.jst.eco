@@ -1,2 +1,2 @@
-<dt><%= @result.get('cigar_store').name %></dt>
+<dt><%= @result.get('cigar_store').get('name') %></dt>
 <dd><%= @result.carriedDescription() %></dd>
