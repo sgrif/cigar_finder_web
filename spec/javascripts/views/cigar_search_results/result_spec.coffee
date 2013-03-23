@@ -12,15 +12,8 @@ describe "CigarFinderWeb.Views.CigarSearchResult", ->
 
     it 'displays a list item', =>
       renderView()
-      expect($el).toContain('dt')
-      expect($el).toContain('dd')
+      expect($el).toBe('li')
 
     it 'displays the stores name', =>
       renderView()
-      expect($el.find('dt')).toHaveText("Jim's Cigars")
-
-    it 'displays whether or not the cigar is carried', =>
-      spyOn(model, 'carriedDescription').andCallFake => 'I am carried'
-      renderView()
-      expect($el.find('dd')).toHaveText('I am carried')
-      expect(model.carriedDescription).toHaveBeenCalled()
+      expect($el).toHaveText("Jim's Cigars")
