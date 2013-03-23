@@ -7,7 +7,12 @@ describe "CigarFinderWeb.Views.MapInfoWindowView", ->
         InfoWindow: ->
     infoWindow = jasmine.createSpyObj('infoWindow', ['open', 'close'])
     spyOn(google.maps, 'InfoWindow').andReturn(infoWindow)
-    model = new Backbone.Model(name: "Jim's Cigars", latitude: 1, longitude: -1, address: '100 Main Street Pleasantville')
+    model = new Backbone.Model
+      name: "Jim's Cigars"
+      latitude: 1
+      longitude: -1
+      address: '100 Main Street Pleasantville'
+    model.directionsLink = ->
     map = jasmine.createSpy('map')
     marker = jasmine.createSpyObj('marker', ['getMap'])
     marker.getMap.andReturn(map)
@@ -42,6 +47,7 @@ describe "CigarFinderWeb.Views.MapInfoWindowView", ->
     [$el] = []
 
     beforeEach ->
+      spyOn(model, 'directionsLink').andReturn("directions link stub")
       $el = view.$el
       $el.html(view.template(cigar_store: model))
 
@@ -51,5 +57,7 @@ describe "CigarFinderWeb.Views.MapInfoWindowView", ->
     it "should display the store's address", ->
       expect($el.find('.js-cigar-store-address')).toHaveText('100 Main Street Pleasantville')
 
-    it "should display a link to the store", ->
-      expect($el).toContain("a[href='https://maps.google.com/maps?daddr=100+Main+Street+Pleasantville']")
+    it "should display a link to get directions to the store", ->
+      directions_link = $el.find('a.js-cigar-store-directions')
+      expect(directions_link).toHaveText("Get Directions")
+      expect(directions_link).toHaveAttr("href", "directions link stub")

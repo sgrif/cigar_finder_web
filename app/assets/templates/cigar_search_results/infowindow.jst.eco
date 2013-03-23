@@ -1,2 +1,6 @@
 <h4 class="js-cigar-store-name"><%= @cigar_store.get('name') %></h4>
 <p class="js-cigar-store-address"><%= @cigar_store.get('address') %></p>
+<a class="js-cigar-store-directions"
+   href="<%= @cigar_store.directionsLink() %>">
+  Get Directions
+</a>
