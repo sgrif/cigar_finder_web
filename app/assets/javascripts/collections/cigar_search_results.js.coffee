@@ -1,20 +1,21 @@
 class CigarFinderWeb.Collections.CigarSearchResults extends Backbone.Collection
+  cachedResponses = {}
+
   model: CigarFinderWeb.Models.CigarSearchResult
   url: 'cigar_search_results'
 
   initialize: ->
-    @cachedResponses = {}
     @loadLocation()
     @on('reset', @cacheCigar)
 
   cacheCigar: =>
-    @cachedResponses[@cigar] ||= _.clone(@models)
+    cachedResponses[@cigar] ||= _.clone(@models)
 
   hasCachedCigar: (cigar) =>
-    @cachedResponses[cigar]?
+    cachedResponses[cigar]?
 
   loadCachedCigar: (cigar) =>
-    @reset(@cachedResponses[cigar])
+    @reset(cachedResponses[cigar])
 
   fetchCigar: (cigar_name) =>
     @cigar = cigar_name
