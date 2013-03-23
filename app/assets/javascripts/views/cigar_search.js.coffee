@@ -16,7 +16,7 @@ class CigarFinderWeb.Views.CigarSearch extends Backbone.View
     this
 
   encodeCigarName: (cigar_name) =>
-    encodeURIComponent(cigar_name).replace(/(%20)+/g, "+")
+    encodePlus(cigar_name)
 
   submitSearch: (e) =>
     e.preventDefault()

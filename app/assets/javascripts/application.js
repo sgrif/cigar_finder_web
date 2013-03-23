@@ -23,3 +23,6 @@
 //= require_tree ./views
 //= require_tree ./routers
 //= require_tree .
+function encodePlus(string) {
+  return encodeURIComponent(string).replace(/(%20)+/g, "+");
+}
