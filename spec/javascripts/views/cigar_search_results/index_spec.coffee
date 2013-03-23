@@ -13,15 +13,13 @@ describe 'CigarFinderWeb.Views.CigarSearchResultsIndex', ->
       expect(view.constructor.prototype.render.callCount).toBe(2)
 
   describe 'rendering', ->
-    carried = { result: 'foo', carried: true }
-    notCarried = { result: 'bar', carried: false }
-    noAnswer = { result: 'baz', carried: null }
+    carried = { cigar_store: 'foo', carried: true }
+    notCarried = { cigar_store: 'bar', carried: false }
+    noAnswer = { cigar_store: 'baz', carried: null }
 
     beforeEach ->
       spyOn(CigarFinderWeb.Views, 'CigarSearchResult').andCallFake (args) ->
-        render: -> el: "<div>#{args.model.get('result')}</div>"
-
-    assertContainsCarried = ->
+        render: -> el: "<div>#{args.model}</div>"
 
     it 'an unstyled list', ->
       expect($el).toBe('ul.unstyled')

@@ -19,5 +19,5 @@ class CigarFinderWeb.Views.CigarSearchResultsIndex extends Backbone.View
     this
 
   addResultTo: (result, $element) =>
-    view = new CigarFinderWeb.Views.CigarSearchResult(model: result)
+    view = new CigarFinderWeb.Views.CigarSearchResult(model: result.get('cigar_store'))
     $element.append(view.render().el)

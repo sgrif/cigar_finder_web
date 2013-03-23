@@ -2,5 +2,5 @@ class CigarFinderWeb.Views.CigarSearchResult extends Backbone.View
   tagName: 'li'
 
   render: ->
-    @$el.html(@model.get('cigar_store').get('name'))
+    @$el.html(@model.get('name'))
     this
