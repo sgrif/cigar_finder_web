@@ -1,7 +1,7 @@
 class CigarFinderWeb.Views.CigarSearchResultsIndex extends Backbone.View
   template: JST['cigar_search_results/index']
   tagName: 'ul'
-  className: 'unstyled'
+  className: 'unstyled results-list'
 
   initialize: =>
     @collection.on('reset', @render)

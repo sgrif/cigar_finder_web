@@ -2,7 +2,6 @@ class CigarFinderWeb.Views.CigarSearch extends Backbone.View
   template: JST['cigar_search']
   events:
     'submit #new-search': 'submitSearch'
-  className: 'row'
 
   initialize: =>
     @collection.on('reset', @searchLoaded)

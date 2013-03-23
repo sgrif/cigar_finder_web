@@ -1,14 +1,14 @@
-<li id='js-results-list-carried'>
+<li id='js-results-list-carried' class='carried'>
   <h3>Carried By</h3>
   <ul></ul>
 </li>
 
-<li id='js-results-list-not-carried'>
+<li id='js-results-list-not-carried' class='not-carried'>
   <h3>Not Carried By</h3>
   <ul></ul>
 </li>
 
-<li id='js-results-list-no-answer'>
+<li id='js-results-list-no-answer' class='no-answer'>
   <h3>No Information For</h3>
   <ul></ul>
 </li>

@@ -5,7 +5,9 @@
   <input type="submit" value="Find it" class="btn" />
 </form>
 
-<div class="span4" id="js-cigar-search-results">
-  <h2 id="js-cigar-name"></h2>
+<h2 id="js-cigar-name"></h2>
+
+<div class="row">
+  <div class="span4" id="js-cigar-search-results"> </div>
+  <div class="span8" id="js-cigar-map"></div>
 </div>
-<div class="span8" id="js-cigar-map"></div>

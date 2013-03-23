@@ -2,7 +2,25 @@
 @import "bootstrap/responsive";
 
 #map-canvas {
-   img {
-     max-width: none;
-   }
- }
+  height: 500px;
+  img {
+    max-width: none;
+  }
+}
+
+.results-list {
+  height: 500px;
+  overflow-y: scroll;
+
+  .carried h3 {
+    color: $green
+  }
+
+  .not-carried h3 {
+    color: $red
+  }
+
+  .no-answer h3 {
+    color: $yellow
+  }
+}
