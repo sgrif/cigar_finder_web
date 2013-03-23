@@ -1,7 +1,13 @@
 require 'spec_helper'
 
 describe 'cigar_search_results/index' do
-  let(:cigar_store) { { id: nil, name: "Jim's Cigars", latitude: 3.0, longitude: 4.0 } }
+  let(:cigar_store) { {
+    id: nil,
+    name: "Jim's Cigars",
+    latitude: 3.0,
+    longitude: 4.0,
+    address: '100 Main Street'
+  } }
 
   it 'displays the search results' do
     assign(:search_results, [stub_model(CigarStock,

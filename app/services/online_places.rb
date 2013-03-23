@@ -23,7 +23,8 @@ class OnlinePlaces
       {
         name: place['name'],
         latitude: place['geometry']['location']['lat'],
-        longitude: place['geometry']['location']['lng']
+        longitude: place['geometry']['location']['lng'],
+        address: place['vicinity']
       }
     end
   end

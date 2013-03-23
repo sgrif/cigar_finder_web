@@ -24,10 +24,15 @@ describe OnlinePlaces do
     end
   end
 
-  it 'returns name, latitude, and longitutde' do
+  it 'returns name, latitude, longitutde, and address' do
     VCR.use_cassette 'movies-downtown-albuquerque' do
       places = OnlinePlaces.places_near(home.latitude, home.longitude, keyword: 'movies', rankby: 'distance', radius: nil)
-      expected = { name: 'Cinemark 14 Downtown', latitude: 35.084046, longitude: -106.648623 }
+      expected = {
+        name: 'Cinemark 14 Downtown',
+        latitude: 35.084046,
+        longitude: -106.648623,
+        address: '100 Central Avenue Southwest, Albuquerque'
+      }
       places.first.should == expected
     end
   end
