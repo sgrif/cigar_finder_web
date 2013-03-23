@@ -32,6 +32,12 @@ describe "CigarFinderWeb.Views.MapInfoWindowView", ->
     it "opens its infowindow using the given marker", ->
       expect(infoWindow.open).toHaveBeenCalledWith(map, marker)
 
+  describe "removing", ->
+    it "closes its infowindow", ->
+      view.render(marker)
+      view.remove()
+      expect(infoWindow.close).toHaveBeenCalled()
+
   describe "infowindow content", ->
     [$el] = []
 
@@ -40,4 +46,10 @@ describe "CigarFinderWeb.Views.MapInfoWindowView", ->
       $el.html(view.template(cigar_store: model))
 
     it "should display the store's name", ->
-      expect($el).toContainHtml("<h6>Jim's Cigars</h6>")
+      expect($el.find('.js-cigar-store-name')).toHaveText("Jim's Cigars")
+
+    it "should display the store's address", ->
+      expect($el.find('.js-cigar-store-address')).toHaveText('100 Main Street Pleasantville')
+
+    it "should display a link to the store", ->
+      expect($el).toContain("a[href='https://maps.google.com/maps?daddr=100+Main+Street+Pleasantville']")

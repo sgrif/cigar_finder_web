@@ -3,15 +3,20 @@ class CigarFinderWeb.Views.MapInfoWindowView extends Backbone.View
 
   template: JST['cigar_search_results/infowindow']
 
-  @removeOpenInfoWindow: ->
+  removeOpenInfoWindow = ->
     openInfoWindow.remove() if openInfoWindow?
     openInfoWindow = null
 
-  @setOpenInfoWindow: (view) ->
+  setOpenInfoWindow = (view) ->
     openInfoWindow = view
 
   render: (marker) =>
-    @constructor.removeOpenInfoWindow()
-    @constructor.setOpenInfoWindow(this)
+    removeOpenInfoWindow()
+    setOpenInfoWindow(this)
     @infoWindow = new google.maps.InfoWindow(content: @template(cigar_store: @model))
     @infoWindow.open(marker.getMap(), marker)
+
+  remove: =>
+    @infoWindow.close() if @infoWindow?
+    @infoWindow = null
+    super()

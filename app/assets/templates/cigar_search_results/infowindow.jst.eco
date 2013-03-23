@@ -1,1 +1,2 @@
-<h6><%= @cigar_store.get('name') %></h6>
+<h4 class="js-cigar-store-name"><%= @cigar_store.get('name') %></h4>
+<p class="js-cigar-store-address"><%= @cigar_store.get('address') %></p>
