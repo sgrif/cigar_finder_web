@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130323185517) do
+ActiveRecord::Schema.define(version: 20130324002917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "cigar_search_logs", force: true do |t|
+    t.string   "ip_address", null: false
+    t.string   "cigar",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "cigar_search_logs", ["ip_address", "cigar"], name: "index_cigar_search_logs_on_ip_address_and_cigar"
 
   create_table "cigar_stocks", force: true do |t|
     t.string   "cigar",          null: false

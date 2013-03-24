@@ -6,6 +6,8 @@ describe CigarSearchResultsController do
 
   before do
     CigarStoreSearch.stub(:new)
+    CigarSearchLog.stub(:log_search)
+    CigarSearch.any_instance.stub(:results)
   end
 
   it 'shows nearby stocks for cigars' do
@@ -20,5 +22,10 @@ describe CigarSearchResultsController do
     request.stub(:location).and_return(stub(latitude: 1, longitude: -1))
     CigarStoreSearch.should_receive(:new).with(1, -1)
     get :index, cigar: 'Illusione MK4', format: :json
+  end
+
+  it 'logs that the search was performed' do
+    CigarSearchLog.should_receive(:log_search).with('0.0.0.0', 'La Dueña')
+    get :index, cigar: 'La Dueña', format: :json
   end
 end

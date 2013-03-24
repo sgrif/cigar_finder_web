@@ -43,7 +43,7 @@ describe CigarStock do
   it 'only performs one query' do
     cigar = 'Tatuaje Black Petit Lancero'
     CigarStock.save_carried(montes, cigar)
-    CigarStock.should_receive(:where).with(cigar_store_id: [montes, vcut], cigar: cigar.downcase).once.and_call_original
+    CigarStock.should_receive(:where).with(cigar_store_id: [montes, vcut], cigar: cigar).once.and_call_original
     cigar_stocks = CigarStock.load_stocks([montes, vcut], cigar)
     cigar_stocks.find { |stock| stock.cigar_store == montes }.carried.should == true
     cigar_stocks.find { |stock| stock.cigar_store == vcut }.carried.should be_nil

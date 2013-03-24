@@ -8,4 +8,8 @@ class CigarSearch
   def results
     @results ||= CigarStock.load_stocks(stores, cigar)
   end
+
+  def log_search(ip)
+    CigarSearchLog.log_search(ip, @cigar)
+  end
 end
