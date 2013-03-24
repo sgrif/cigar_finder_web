@@ -33,9 +33,9 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.33)
     addressable (2.3.3)
-    arel (4.0.0.beta1)
+    arel (4.0.0.beta2)
     atomic (1.0.1)
-    backbone-on-rails (0.9.10.0)
+    backbone-on-rails (1.0.0.0)
       eco
       ejs
       jquery-rails
@@ -58,7 +58,7 @@ GEM
     coffee-script (2.2.0)
       coffee-script-source
       execjs
-    coffee-script-source (1.6.1)
+    coffee-script-source (1.6.2)
     crack (0.3.2)
     cucumber (1.2.3)
       builder (>= 2.1.2)
@@ -84,7 +84,7 @@ GEM
       multi_json (~> 1.0)
     faye-websocket (0.4.7)
       eventmachine (>= 0.12.0)
-    ffi (1.4.0)
+    ffi (1.5.0)
     foreman (0.62.0)
       thor (>= 0.13.6)
     geocoder (1.1.6)
@@ -115,10 +115,10 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.21)
-    minitest (4.6.2)
-    multi_json (1.6.1)
+    minitest (4.7.0)
+    multi_json (1.7.2)
     multi_xml (0.5.3)
-    nokogiri (1.5.6)
+    nokogiri (1.5.9)
     pg (0.14.1)
     poltergeist (1.1.0)
       capybara (~> 2.0, >= 2.0.1)
@@ -181,14 +181,14 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
-    thin (1.5.0)
+    thin (1.5.1)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
     thor (0.17.0)
     thread_safe (0.1.0)
       atomic
-    tilt (1.3.5)
+    tilt (1.3.6)
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
