@@ -8,10 +8,9 @@ describe "CigarFinderWeb.Views.MapView", ->
         LatLng: ->
         MapTypeId:
           ROADMAP: 1
+    spyOn(CigarFinderWeb.Services.LocationLoader, 'loadLocation').andCallFake (callback) =>
+      callback(latitude: 1, longitude: -1)
     collection = new Backbone.Collection()
-    collection.position = {latitude: 1, longitude: -1}
-    collection.loadLocation = (success) ->
-      success()
     view = new CigarFinderWeb.Views.MapView(collection: collection)
     $el = $(view.render().el)
 

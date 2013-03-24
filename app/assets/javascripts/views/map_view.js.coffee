@@ -6,9 +6,9 @@ class CigarFinderWeb.Views.MapView extends Backbone.View
     @collection.on('reset', @renderMap)
 
   renderMap: =>
-    @collection.loadLocation =>
+    CigarFinderWeb.Services.LocationLoader.loadLocation (position) =>
       @map ||= new google.maps.Map @el,
-        center: @getLatLng()
+        center: new google.maps.LatLng(position.latitude, position.longitude)
         zoom: 11
         mapTypeId: google.maps.MapTypeId.ROADMAP
       @renderMarkers()
@@ -20,8 +20,3 @@ class CigarFinderWeb.Views.MapView extends Backbone.View
       @marker = new CigarFinderWeb.Views.MapMarkerView(model: model)
       @markerViews.push(@marker)
       @marker.render(@map)
-
-  getLatLng: =>
-    lat = @collection.position.latitude
-    lon = @collection.position.longitude
-    new google.maps.LatLng(lat, lon)

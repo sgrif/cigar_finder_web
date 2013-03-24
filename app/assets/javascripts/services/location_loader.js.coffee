@@ -2,14 +2,14 @@ class CigarFinderWeb.Services.LocationLoader
   loadedLocation = null
   locationRequestPerformed = false
 
-  @loadLocation: (onSuccess = ->) ->
+  @loadLocation: (onSuccess = ->) =>
     if loadedLocation?
       onSuccess(loadedLocation)
     else
-      @once('location:loaded', -> onSuccess(loadedLocation))
+      @once('location:loaded', => onSuccess(loadedLocation))
       locationRequest() unless locationRequestPerformed
 
-  @clearLocation: ->
+  @clearLocation: =>
     loadedLocation = null
     locationRequestPerformed = false
 

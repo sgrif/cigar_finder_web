@@ -1,6 +1,11 @@
 describe 'CigarFinderWeb.Views.CigarSearch', ->
   [collection, view, $el] = []
 
+  mockView = (viewClass) =>
+    testDouble = new Backbone.View()
+    spyOn(testDouble, 'render').andReturn(el: "I am a mock of #{viewClass}")
+    spyOn(CigarFinderWeb.Views, viewClass).andReturn(testDouble)
+
   renderView = =>
     collection = new CigarFinderWeb.Collections.CigarSearchResults()
     spyOn(collection, 'fetchCigar')
@@ -8,6 +13,8 @@ describe 'CigarFinderWeb.Views.CigarSearch', ->
     $el = $(view.render().el)
 
   beforeEach =>
+    mockView('CigarSearchResultsIndex')
+    mockView('MapView')
     renderView()
 
   describe 'encodeCigarName', =>
@@ -27,20 +34,13 @@ describe 'CigarFinderWeb.Views.CigarSearch', ->
       expect(form).toContain('input#new-search-cigar')
       expect(form).toContain('input[type=submit][value="Find it"]')
 
-    mockView = (viewClass) =>
-      testDouble = new Backbone.View()
-      spyOn(testDouble, 'render').andReturn(el: "I am a mock of #{viewClass}")
-      spyOn(CigarFinderWeb.Views, viewClass).andReturn(testDouble)
-
     it 'displays a results view', =>
-      mockView("CigarSearchResultsIndex")
       renderView()
       expect(CigarFinderWeb.Views.CigarSearchResultsIndex).toHaveBeenCalledWith
         collection: collection
       expect($el.find('#js-cigar-search-results')).toContainHtml('I am a mock of CigarSearchResultsIndex')
 
     it 'displays a map view', =>
-      mockView("MapView")
       renderView()
       expect(CigarFinderWeb.Views.MapView).toHaveBeenCalledWith
         collection: collection

@@ -18,6 +18,7 @@ class CigarFinderWeb.Routers.CigarSearchResults extends Backbone.Router
     @view = new CigarFinderWeb.Views.CigarSearch(collection: @collection)
     @fadeTo(@view.render().el)
     @view.performSearch(@decodeCigarName(cigar_name))
+    window.the_view = @view
 
   decodeCigarName: (cigar_name) ->
     decodeURIComponent(cigar_name.replace(/[+]/g, "%20"))
