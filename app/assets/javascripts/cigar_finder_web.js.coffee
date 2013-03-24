@@ -3,6 +3,7 @@ window.CigarFinderWeb =
   Collections: {}
   Views: {}
   Routers: {}
+  Services: {}
   cigars: []
   initialize: ->
     new CigarFinderWeb.Routers.CigarSearchResults()
