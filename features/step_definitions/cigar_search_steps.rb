@@ -63,3 +63,11 @@ end
 Then /^I should see no answer for "(.*?)"$/ do |store_name|
   assert_answer(store_name, nil)
 end
+
+Given /^somebody has searched for "(.*?)"$/ do |cigar|
+  CigarSearchLog.log_search('127.0.0.1', cigar)
+end
+
+Given /^somebody else has searched for "(.*?)"$/ do |cigar|
+  CigarSearchLog.log_search('67.41.101.230', cigar)
+end

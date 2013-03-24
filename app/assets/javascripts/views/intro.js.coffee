@@ -7,6 +7,7 @@ class CigarFinderWeb.Views.Intro extends Backbone.View
   render: ->
     @$el.html(@template())
     @$('#js-intro-buttons').fadeIn()
+    @$('#js-intro-find-cigar-name').typeahead(source: CigarFinderWeb.cigars)
     this
 
   renderFind: ->

@@ -2,10 +2,9 @@
 <html>
 <head>
   <title>CigarFinderWeb</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag    "application", media: "all" %>
   <%= javascript_include_tag "application",
-    "https://maps.googleapis.com/maps/api/js?key=#{ENV.fetch('GOOGLE_API_KEY')}&sensor=false",
-    "data-turbolinks-track" => true %>
+    "https://maps.googleapis.com/maps/api/js?key=#{ENV.fetch('GOOGLE_API_KEY')}&sensor=false" %>
   <%= csrf_meta_tags %>
 </head>
 <body>

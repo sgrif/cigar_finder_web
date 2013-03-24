@@ -18,6 +18,10 @@
   .btn {
     @extend .btn-primary;
   }
+
+  .typeahead {
+    text-align: left;
+  }
 }
 
 .hero-unit {

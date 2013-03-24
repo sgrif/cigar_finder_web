@@ -2,7 +2,7 @@
 
 <form id="new-search" class="cigar-search-form">
   <div class="input-append">
-    <input type="text" id="new-search-cigar" class="input-medium search-query"/>
+    <input type="search" id="new-search-cigar" class="input-medium"/>
     <input type="submit" value="Find it" class="btn" />
   </div>
 </form>

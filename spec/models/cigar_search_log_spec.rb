@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe CigarSearchLog do
-  context '#log_search' do
+  context '.log_search' do
     it 'saves a record of the search to the database' do
       ip = '127.0.0.1'
       cigar = 'Tatuaje 7th Reserva'
@@ -23,6 +23,20 @@ describe CigarSearchLog do
       expect do
         CigarSearchLog.log_search('67.41.101.230', 'La Dueña')
       end.not_to change(CigarSearchLog, :count)
+    end
+  end
+
+  context '.all_cigars' do
+    it 'gives all known cigars' do
+      CigarSearchLog.create!(ip_address: '127.0.0.1', cigar: 'Tatuaje 7th Reserva')
+      CigarSearchLog.create!(ip_address: '127.0.0.1', cigar: 'Illusione MK')
+      CigarSearchLog.all_cigars.should =~ ['Tatuaje 7th Reserva', 'Illusione MK']
+    end
+
+    it 'does not include duplicates' do
+      CigarSearchLog.create!(ip_address: '127.0.0.1', cigar: 'Tatuaje The Mummy')
+      CigarSearchLog.create!(ip_address: '67.41.101.230', cigar: 'Tatuaje The Mummy')
+      CigarSearchLog.all_cigars.should == ['Tatuaje The Mummy']
     end
   end
 end

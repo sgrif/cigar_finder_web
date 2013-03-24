@@ -8,6 +8,7 @@ class CigarFinderWeb.Views.CigarSearch extends Backbone.View
 
   render: =>
     @$el.html(@template())
+    @$('#new-search-cigar').typeahead(source: CigarFinderWeb.cigars)
     resultsView = new CigarFinderWeb.Views.CigarSearchResultsIndex(collection: @collection)
     @$('#js-cigar-search-results').append(resultsView.render().el)
     mapView = new CigarFinderWeb.Views.MapView(collection: @collection)
@@ -25,6 +26,7 @@ class CigarFinderWeb.Views.CigarSearch extends Backbone.View
 
   performSearch: (cigar) =>
     @cigar = cigar
+    CigarFinderWeb.cigars.push(cigar) unless _.contains(CigarFinderWeb.cigars, cigar)
     @collection.fetchCigar(cigar)
 
   searchLoaded: =>

@@ -3,6 +3,7 @@ window.CigarFinderWeb =
   Collections: {}
   Views: {}
   Routers: {}
+  cigars: []
   initialize: ->
     new CigarFinderWeb.Routers.CigarSearchResults()
     Backbone.history.start(pushState: true)
