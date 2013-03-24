@@ -4,22 +4,27 @@ class CigarFinderWeb.Routers.CigarSearchResults extends Backbone.Router
     ':cigar_name': 'performSearch'
 
   index: ->
-    @introView ||= new CigarFinderWeb.Views.Intro()
+    @searchView.remove() if @searchView?
+    @introView = new CigarFinderWeb.Views.Intro()
     @fadeTo(@introView)
 
-  fadeTo: (view) ->
-    unless @view is view
+  fadeTo: (view, callback = (->)) ->
+    if @view is view
+      callback()
+    else
       @view = view
       $container = $('#container')
-      $container.html(@view.render().el)
+      $container.fadeOut =>
+        $container.html(@view.render().el)
+        $container.fadeIn()
+        callback()
 
   performSearch: (cigar_name) ->
     unless @searchView?
       collection = new CigarFinderWeb.Collections.CigarSearchResults()
       @searchView = new CigarFinderWeb.Views.CigarSearch(collection: collection)
-    @fadeTo(@searchView)
-    @searchView.performSearch(@decodeCigarName(cigar_name))
-    window.the_view = @view
+    @fadeTo @searchView, =>
+      @searchView.performSearch(@decodeCigarName(cigar_name))
 
   decodeCigarName: (cigar_name) ->
     decodeURIComponent(cigar_name.replace(/[+]/g, "%20"))

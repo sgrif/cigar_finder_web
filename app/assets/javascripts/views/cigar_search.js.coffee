@@ -9,7 +9,7 @@ class CigarFinderWeb.Views.CigarSearch extends Backbone.View
     @mapView = new CigarFinderWeb.Views.MapView(collection: @collection)
 
   render: =>
-    @$el.html(@template())
+    @$el.html(@template()) unless @$el.text()
     @delegateEvents()
     @$('#new-search-cigar').typeahead(source: CigarFinderWeb.cigars)
     @$('#js-cigar-search-results').html(@resultsView.render().el)
@@ -33,4 +33,5 @@ class CigarFinderWeb.Views.CigarSearch extends Backbone.View
 
   searchLoaded: =>
     @$('#js-cigar-name').html(@cigar)
-    @$('#new-search')[0].reset()
+    if @$('#new-search').length
+      @$('#new-search')[0].reset()

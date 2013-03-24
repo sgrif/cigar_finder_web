@@ -10,10 +10,12 @@ describe "CigarFinderWeb.Collections.CigarSearchResults", ->
   describe "fetching user position", =>
     it "performs an API call with user location", =>
       collection.fetchCigar('Tatuaje 7th Reserva')
-      expect(collection.fetch).toHaveBeenCalledWith data:
-        cigar: 'Tatuaje 7th Reserva'
-        latitude: 1
-        longitude: -1
+      expect(collection.fetch).toHaveBeenCalledWith
+        data:
+          cigar: 'Tatuaje 7th Reserva'
+          latitude: 1
+          longitude: -1
+        reset: true
 
   describe "fetching a cigar", =>
     beforeEach =>
@@ -23,10 +25,12 @@ describe "CigarFinderWeb.Collections.CigarSearchResults", ->
 
     it "only calls fetch once per cigar", =>
       collection.fetchCigar('Tatuaje 7th Reserva')
-      expect(collection.fetch).toHaveBeenCalledWith data:
-        cigar: 'Tatuaje 7th Reserva'
-        latitude: 1
-        longitude: -1
+      expect(collection.fetch).toHaveBeenCalledWith
+        data:
+          cigar: 'Tatuaje 7th Reserva'
+          latitude: 1
+          longitude: -1
+        reset: true
       collection.fetchCigar('Tatuaje 7th Reserva')
       expect(collection.fetch.callCount).toBe(1)
 
