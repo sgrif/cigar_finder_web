@@ -25,7 +25,9 @@ class CigarFinderWeb.Collections.CigarSearchResults extends Backbone.Collection
 
   loadCigar: (cigar_name) =>
     CigarFinderWeb.Services.LocationLoader.loadLocation (position) =>
-      @fetch data:
-        cigar: cigar_name
-        latitude: position.latitude
-        longitude: position.longitude
+      @fetch
+        data:
+          cigar: cigar_name
+          latitude: position.latitude
+          longitude: position.longitude
+        reset: true
