@@ -10,6 +10,7 @@ class CigarFinderWeb.Views.CigarSearch extends Backbone.View
 
   render: =>
     @$el.html(@template())
+    @delegateEvents()
     @$('#new-search-cigar').typeahead(source: CigarFinderWeb.cigars)
     @$('#js-cigar-search-results').html(@resultsView.render().el)
     @$('#js-cigar-map').html(@mapView.render().el)
@@ -21,8 +22,9 @@ class CigarFinderWeb.Views.CigarSearch extends Backbone.View
   submitSearch: (e) =>
     e.preventDefault()
     cigar_name = @$('#new-search-cigar').val()
-    @performSearch(cigar_name)
-    Backbone.history.navigate(@encodeCigarName(cigar_name), trigger: false)
+    if cigar_name
+      @performSearch(cigar_name)
+      Backbone.history.navigate(@encodeCigarName(cigar_name), trigger: false)
 
   performSearch: (cigar) =>
     @cigar = cigar
