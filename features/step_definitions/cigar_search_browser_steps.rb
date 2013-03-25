@@ -32,3 +32,17 @@ end
 Then /^the store list should contain "(.*?)"$/ do |store_name|
   find('#js-new-result-cigar-store-id').should have_selector('option', text: store_name)
 end
+
+When /^I report that "(.*?)" carries "(.*?)"$/ do |store_name, cigar|
+  visit('/')
+  find('#js-add-a-cigar').click
+  find('#js-new-result-cigar-store-id', visible: true)
+  select(store_name, from: 'js-new-result-cigar-store-id')
+  fill_in('js-new-result-cigar', with: cigar)
+  page.choose('Carried')
+  find('#js-new-result-submit').click
+end
+
+Then /^I should be redirected to the search page for "(.*?)"$/ do |cigar_name|
+  current_path.should == URI.encode(cigar_name).gsub("%20", "+")
+end

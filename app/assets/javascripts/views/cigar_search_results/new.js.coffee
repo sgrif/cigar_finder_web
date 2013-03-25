@@ -2,6 +2,9 @@ class CigarFinderWeb.Views.NewCigarSearchResult extends Backbone.View
   template: JST['cigar_search_results/new']
   tagName: 'form'
 
+  events:
+    'submit': 'saveResult'
+
   render: =>
     @getNearbyStores()
     @$el.html(@template())
@@ -17,3 +20,12 @@ class CigarFinderWeb.Views.NewCigarSearchResult extends Backbone.View
   addStore: (store) =>
     @$('#js-new-result-cigar-store-id').append(
       "<option value='#{store.get('id')}'>#{store.get('name')}</option>")
+
+  saveResult: (e) =>
+    e.preventDefault()
+    @model = new CigarFinderWeb.Models.CigarSearchResult
+      cigar_store_id: @$('#js-new-result-cigar-store-id').val()
+      cigar: @$('#js-new-result-cigar').val()
+      carried: @$('.js-cigar-carried:checked').val()
+    @model.save()
+    Backbone.history.navigate(encodePlus(@model.get('cigar')), trigger: true)

@@ -45,8 +45,8 @@ Given /^"(.*?)" in "(.*?)" does not carry "(.*?)"$/ do |store_name, location, ci
 end
 
 When /^I search for "([^"]*?)"$/ do |cigar|
-  visit cigar_search_results_path(cigar: cigar, latitude: @location.latitude, longitude: @location.longitude, format: :json)
-  @search = ActiveSupport::JSON.decode(page.source)
+  get cigar_search_results_path(cigar: cigar, latitude: @location.latitude, longitude: @location.longitude, format: :json)
+  @search = ActiveSupport::JSON.decode(last_response.body)
 end
 
 When /^I search for "(.*?)" in "(.*?)"$/ do |cigar, location|
