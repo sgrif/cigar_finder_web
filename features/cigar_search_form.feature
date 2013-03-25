@@ -5,7 +5,7 @@ Feature: Cigar Search Form
 
     When I visit the home page
     And I open the search box
-    And I fill in the search box with "T"
+    And I fill in the cigar input with "T"
 
     Then I should see an autocomplete box with the following:
       | Tatuaje 7th Reserva |
@@ -17,7 +17,7 @@ Feature: Cigar Search Form
 
     When I visit the home page
     And I open the search box
-    And I fill in the search box with "T"
+    And I fill in the cigar input with "T"
 
     Then I should see an autocomplete box with the following:
       | Tatuaje 7th Reserva           |
@@ -27,7 +27,7 @@ Feature: Cigar Search Form
     Given somebody has searched for "Illusione Mk Ultra"
 
     When I visit the search page for "La Dueña"
-    And I fill in the search box with "I"
+    And I fill in the cigar input with "I"
 
     Then I should see an autocomplete box with the following:
       | Illusione Mk Ultra |
@@ -36,7 +36,7 @@ Feature: Cigar Search Form
     Given somebody has searched for "Tatuaje 7th Reserva"
 
     When I visit the search page for "Tatuaje Cojonu 2012 Broadleaf"
-    And I fill in the search box with "T"
+    And I fill in the cigar input with "T"
 
     Then I should see an autocomplete box with the following:
       | Tatuaje 7th Reserva           |
@@ -46,7 +46,7 @@ Feature: Cigar Search Form
     Given somebody has searched for "Tatuaje 7th Reserva"
 
     When I visit the search page for "Tatuaje 7th Reserva"
-    And I fill in the search box with "T"
+    And I fill in the cigar input with "T"
 
     Then I should see an autocomplete box with the following:
       | Tatuaje 7th Reserva |

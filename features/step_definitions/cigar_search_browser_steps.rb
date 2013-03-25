@@ -14,8 +14,8 @@ When /^I open the add cigar form$/ do
   find('#js-add-a-cigar').click
 end
 
-When /^I fill in the search box with "(.*?)"$/ do |text|
-  find('.cigar-search-form input[type=search]', visible: true).set(text)
+When /^I fill in the cigar input with "(.*?)"$/ do |text|
+  find('input.js-cigar-name', visible: true).set(text)
 end
 
 Then /^I should see an autocomplete box with the following:$/ do |table|

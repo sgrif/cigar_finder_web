@@ -5,6 +5,7 @@ class CigarFinderWeb.Views.NewCigarSearchResult extends Backbone.View
   render: =>
     @getNearbyStores()
     @$el.html(@template())
+    @$('input.js-cigar-name').typeahead(source: CigarFinderWeb.cigars)
     @nearbyStores.each(@addStore)
     this
 
