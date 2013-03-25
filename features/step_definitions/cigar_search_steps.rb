@@ -74,3 +74,7 @@ end
 Given /^somebody else has searched for "(.*?)"$/ do |cigar|
   CigarSearchLog.log_search('67.41.101.230', cigar)
 end
+
+Then /^I should see results for the cigar "(.*?)"$/ do |cigar|
+  @search.first.fetch('cigar').should == cigar
+end

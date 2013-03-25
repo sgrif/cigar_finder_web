@@ -42,6 +42,5 @@ Feature: Users can search for a cigar
     Then I should see no answer for "Rio Rancho Cigars"
 
   Scenario: Searches are converted to title case
-    When pending
-    # Illusione MK Ultra becoming Illusione Mk Ultra is a good example
-    # This is already happening server side
+    When I search for "Illusione MK Ultra" in "Albuquerque"
+    Then I should see results for the cigar "Illusione Mk Ultra"
