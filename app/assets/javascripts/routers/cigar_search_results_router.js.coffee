@@ -3,11 +3,6 @@ class CigarFinderWeb.Routers.CigarSearchResults extends Backbone.Router
     '': 'index'
     ':cigar_name': 'performSearch'
 
-  index: ->
-    @searchView.remove() if @searchView?
-    @introView = new CigarFinderWeb.Views.Intro()
-    @fadeTo(@introView)
-
   fadeTo: (view, callback = (->)) ->
     if @view is view
       callback()
@@ -18,6 +13,11 @@ class CigarFinderWeb.Routers.CigarSearchResults extends Backbone.Router
         $container.html(@view.render().el)
         $container.fadeIn()
         callback()
+
+  index: ->
+    @searchView.remove() if @searchView?
+    @introView = new CigarFinderWeb.Views.Intro()
+    @fadeTo(@introView)
 
   performSearch: (cigar_name) ->
     unless @searchView?

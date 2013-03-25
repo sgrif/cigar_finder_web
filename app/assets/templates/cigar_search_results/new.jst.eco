@@ -1,0 +1,9 @@
+<div class='control-group'>
+  <div class="controls">
+    <select id='js-new-result-cigar-id'>
+      <% for cigar_store in @cigar_stores.toArray(): %>
+        <option value="<%= cigar_store.get('id') %>"><%= cigar_store.get('name') %></option>
+      <% end %>
+    </select>
+  </div>
+</div>
