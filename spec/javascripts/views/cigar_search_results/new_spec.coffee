@@ -14,8 +14,8 @@ describe "CigarFinderWeb.Views.NewCigarSearchResult", ->
       CigarFinderWeb.Collections.CigarStores.nearbyStores.andReturn(
         new Backbone.Collection([{id: 1, name: "Jim's"}, {id: 2, name: "Bob's"}]))
       renderView()
-      expect($el.find('#js-new-result-cigar-id')).toContain(
+      expect($el.find('#js-new-result-cigar-store-id')).toContain(
         'option[value=1]:contains("Jim\'s")')
-      expect($el.find('#js-new-result-cigar-id')).toContain(
+      expect($el.find('#js-new-result-cigar-store-id')).toContain(
         'option[value=2]:contains("Bob\'s")')
-      expect($el.find('#js-new-result-cigar-id option').length).toBe(2)
+      expect($el.find('#js-new-result-cigar-store-id option').length).toBe(2)

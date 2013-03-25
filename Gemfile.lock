@@ -215,6 +215,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0.beta1)
   cucumber-rails
   database_cleaner
+  eco
   foreman
   geocoder
   httparty

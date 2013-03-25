@@ -4,6 +4,9 @@ end
 
 Given /^I am in Albuquerque$/ do
   @location = get_location('Albuquerque')
+  CigarStoresController.any_instance.stub(:params) do
+    { latitude: @location.latitude, longitude: @location.longitude }
+  end
 end
 
 When /^I list stores near me$/ do

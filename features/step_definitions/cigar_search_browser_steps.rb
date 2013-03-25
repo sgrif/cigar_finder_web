@@ -26,9 +26,9 @@ Then /^I should see an autocomplete box with the following:$/ do |table|
 end
 
 Then /^selected store should be "(.*?)"$/ do |store_name|
-  find('#js-add-cigar-store-id').should have_selector('option:selected', text: store_name)
+  find('#js-new-result-cigar-store-id option', text: store_name).should be_selected
 end
 
 Then /^the store list should contain "(.*?)"$/ do |store_name|
-  find('#js-add-cigar-store-id').should have_selector('option', text: store_name)
+  find('#js-new-result-cigar-store-id').should have_selector('option', text: store_name)
 end
