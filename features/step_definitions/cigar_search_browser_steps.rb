@@ -33,14 +33,22 @@ Then /^the store list should contain "(.*?)"$/ do |store_name|
   find('#js-new-result-cigar-store-id').should have_selector('option', text: store_name)
 end
 
-When /^I report that "(.*?)" carries "(.*?)"$/ do |store_name, cigar|
+def add_cigar(store_name, cigar, carried)
   visit('/')
   find('#js-add-a-cigar').click
   find('#js-new-result-cigar-store-id', visible: true)
   select(store_name, from: 'js-new-result-cigar-store-id')
   fill_in('js-new-result-cigar', with: cigar)
-  page.choose('Carried')
+  page.choose(carried)
   find('#js-new-result-submit').click
+end
+
+When /^I report that "(.*?)" carries "(.*?)"$/ do |store_name, cigar|
+  add_cigar(store_name, cigar, 'js-new-result-carried')
+end
+
+When /^I report that "(.*?)" does not carry "(.*?)"$/ do |store_name, cigar|
+  add_cigar(store_name, cigar, 'js-new-result-not-carried')
 end
 
 Then /^I should be redirected to the search page for "(.*?)"$/ do |cigar_name|

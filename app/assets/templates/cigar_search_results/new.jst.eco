@@ -17,6 +17,11 @@
       Carried
     </label>
 
+    <label class='radio'>
+      <input id='js-new-result-not-carried' class='js-cigar-carried' type='radio' value='0' />
+      Not Carried
+    </label>
+
     <input id='js-new-result-submit' type="submit" class="btn btn-primary" value="Submit" />
   </div>
 </div>
