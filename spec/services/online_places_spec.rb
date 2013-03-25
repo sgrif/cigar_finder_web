@@ -9,9 +9,9 @@ describe OnlinePlaces do
   it 'should return relevant nearby places' do
     VCR.use_cassette('nearby-restaurants-downtown') do
       places = OnlinePlaces.places_near(home.latitude, home.longitude, keyword: 'restaurant')
-      standard_diner_index = places.index { |place| place[:name] == 'Standard Diner' }
+      artichoke_index = places.index { |place| place[:name] == 'The Artichoke Cafe' }
       frontier_index = places.index { |place| place[:name] == 'Frontier Restaurant' }
-      standard_diner_index.should be < frontier_index
+      artichoke_index.should be < frontier_index
     end
   end
 
