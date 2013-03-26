@@ -23,15 +23,15 @@ Feature: Adding a cigar
   Scenario: Users can report a cigar as carried
     Given I am in Albuquerque
 
-    When I report that "Monte's Cigars, Tobacco And Gifts" carries "Tatuaje 7th Reserva"
-    And I search for "Tatuaje 7th Reserva"
+    When I visit the home page
+    And I report that "Monte's Cigars, Tobacco And Gifts" carries "Tatuaje 7th Reserva"
 
-    Then I should see it is carried by "Monte's Cigars, Tobacco And Gifts"
+    Then the page should show it is carried by "Monte's Cigars, Tobacco And Gifts"
 
   Scenario: Users can report a cigar as not carried
     Given I am in Albuquerque
 
+    When I visit the home page
     When I report that "Stag Tobacconist" does not carry "Illusione Mk Ultra"
-    And I search for "Illusione Mk Ultra"
 
-    Then I should see it is carried by "Stag Tobacconist"
+    Then the page should show it is not carried by "Stag Tobacconist"

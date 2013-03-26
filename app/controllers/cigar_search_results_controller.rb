@@ -11,7 +11,7 @@ class CigarSearchResultsController < ApplicationController
   end
 
   def create
-    if params.fetch(:carried)
+    if params.fetch(:carried).present?
       CigarStock.save_carried(params.fetch(:cigar_store_id), params.fetch(:cigar))
     else
       CigarStock.save_not_carried(params.fetch(:cigar_store_id), params.fetch(:cigar))
