@@ -12,7 +12,7 @@ class CigarFinderWeb.Views.CigarSearch extends Backbone.View
     @delegateEvents()
     @$('#js-cigar-search-results').html(@resultsView.render().el)
     @$('#js-cigar-map').html(@mapView.render().el)
-    @formView.setElement(@$('#js-new-search')).render()
+    @assign(@formView, '#js-new-search')
     this
 
   performSearch: (cigar) =>

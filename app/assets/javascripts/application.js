@@ -15,6 +15,7 @@
 //= require bootstrap
 //= require underscore
 //= require backbone
+//= require backbone_extensions
 //= require cigar_finder_web
 //= require_tree ../templates
 //= require_tree ./models
