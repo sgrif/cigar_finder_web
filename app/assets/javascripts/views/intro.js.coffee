@@ -3,29 +3,38 @@ class CigarFinderWeb.Views.Intro extends Backbone.View
   className: 'hero-unit text-center'
   events:
     'click #js-find-a-cigar': 'renderFind'
-    'click #js-add-a-cigar': 'renderAdd'
+    'click #js-add-a-cigar': 'visitAdd'
     'submit #js-intro-find-form': 'submitFind'
 
-  initialize: ->
+  initialize: (options = {}) ->
     @searchForm = new CigarFinderWeb.Views.CigarSearchForm()
+    @addForm = new CigarFinderWeb.Views.NewCigarSearchResult(location: options.location)
 
   render: ->
     @$el.html(@template())
-    @addCigarView = new CigarFinderWeb.Views.NewCigarSearchResult(className: 'intro-step')
-    @$el.append(@addCigarView.render().el)
-    @$('#js-intro-buttons').show()
-    @assign(@searchForm, '#js-intro-find-form')
     this
 
   fadeTo: (view) ->
-    @$('.intro-step:visible').fadeOut =>
-      view.$el.fadeIn()
+    $visible = @$('.intro-step:visible')
+    if $visible.length
+      $visible.fadeOut =>
+        view.$el.fadeIn()
+    else
+      view.$el.show()
+
+  visitAdd: ->
+    Backbone.history.navigate('add-a-cigar', trigger: true)
+
+  renderButtons: =>
+    @fadeTo($el: @$('#js-intro-buttons'))
+
+  renderAdd: =>
+    @assign(@addForm, '#js-intro-add-form')
+    @fadeTo(@addForm)
 
   renderFind: ->
+    @assign(@searchForm, '#js-intro-find-form')
     @fadeTo(@searchForm)
-
-  renderAdd: ->
-    @fadeTo(@addCigarView)
 
   submitFind: (e) ->
     e.preventDefault()

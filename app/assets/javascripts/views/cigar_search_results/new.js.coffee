@@ -5,6 +5,9 @@ class CigarFinderWeb.Views.NewCigarSearchResult extends Backbone.View
   events:
     'submit': 'saveResult'
 
+  initialize: (options = {}) ->
+    @location = options.location
+
   render: =>
     @getNearbyStores()
     @$el.html(@template())
@@ -14,7 +17,7 @@ class CigarFinderWeb.Views.NewCigarSearchResult extends Backbone.View
 
   getNearbyStores: =>
     unless @nearbyStores?
-      @nearbyStores = CigarFinderWeb.Collections.CigarStores.nearbyStores()
+      @nearbyStores = CigarFinderWeb.Collections.CigarStores.near(@location)
       @nearbyStores.on('add', @addStore)
 
   addStore: (store) =>
@@ -28,4 +31,9 @@ class CigarFinderWeb.Views.NewCigarSearchResult extends Backbone.View
       cigar: @$('#js-new-result-cigar').val()
       carried: @$('.js-cigar-carried:checked').val()
     @model.save()
-    Backbone.history.navigate(encodePlus(@model.get('cigar')), trigger: true)
+    Backbone.history.navigate(@searchUri(), trigger: true)
+
+  searchUri: =>
+    uri = encodePlus(@model.get('cigar'))
+    uri += "/#{encodePlus(@location)}" if @location?
+    uri

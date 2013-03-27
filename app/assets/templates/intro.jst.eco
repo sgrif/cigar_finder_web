@@ -5,3 +5,4 @@
 </p>
 
 <form id='js-intro-find-form' class='intro-step'></form>
+<form id='js-intro-add-form' class='intro-step'></form>

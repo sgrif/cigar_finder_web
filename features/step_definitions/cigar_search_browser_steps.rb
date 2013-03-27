@@ -1,35 +1,19 @@
-def visit_home_page
-  visit('/')
-  if @location
-    page.evaluate_script <<-EOJS
-      window.navigator.geolocation = {
-        getCurrentPosition: function(callback) {
-          callback({coords: {latitude: #{@location.latitude}, longitude: #{@location.longitude}}});
-        }
-      };
-      CigarFinderWeb.Services.LocationLoader.clearLocation();
-    EOJS
-  end
+def encode_elements(*args)
+  encoded = args.reject(&:nil?).map { |el| URI.encode(el).gsub('%20', '+') }
+  "/#{encoded.join("/")}"
 end
 
 When /^I visit the home page$/ do
-  visit_home_page
+  visit('/')
 end
 
 When /^I visit the search page for "(.*?)"$/ do |cigar|
-  visit_home_page
-  find('#js-find-a-cigar').click
-  find('#js-intro-find-form .js-cigar-name', visible: true).set(cigar)
-  click_on("Find it")
+  visit(encode_elements(cigar, @location_name))
   find('#js-cigar-name', visible: true, text: cigar)
 end
 
 When /^I open the search box$/ do
   find('#js-find-a-cigar').click
-end
-
-When /^I open the add cigar form$/ do
-  find('#js-add-a-cigar').click
 end
 
 When /^I fill in the cigar input with "(.*?)"$/ do |text|
@@ -52,7 +36,7 @@ Then /^the store list should contain "(.*?)"$/ do |store_name|
 end
 
 def add_cigar(store_name, cigar, carried)
-  find('#js-add-a-cigar').click
+  visit(encode_elements('add-a-cigar', @location_name))
   find('#js-new-result-cigar-store-id', visible: true)
   select(store_name, from: 'js-new-result-cigar-store-id')
   fill_in('js-new-result-cigar', with: cigar)
@@ -78,4 +62,12 @@ end
 
 Then /^the page should show it is not carried by "(.*?)"$/ do |store_name|
   find('#js-results-list-not-carried', visible: true).should have_selector('li', text: store_name)
+end
+
+Then /^I should be at the add cigar form$/ do
+  page.should have_selector('input.js-cigar-name', visible: true)
+end
+
+When /^I visit the add cigar form from "(.*?)"$/ do |location|
+  visit(encode_elements('add-a-cigar', location))
 end

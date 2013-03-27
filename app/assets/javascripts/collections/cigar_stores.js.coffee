@@ -1,11 +1,11 @@
 class CigarFinderWeb.Collections.CigarStores extends Backbone.Collection
   model: CigarFinderWeb.Models.CigarStore
 
-  @nearbyStores: =>
+  @near: (location) =>
     nearbyStores = new CigarFinderWeb.Collections.CigarStores
-    CigarFinderWeb.Services.LocationLoader.loadLocation (position) =>
+    CigarFinderWeb.Services.LocationLoader.loadLocation location, (position) =>
       nearbyStores.fetch
-        url: 'cigar_stores/nearby'
+        url: '/cigar_stores/nearby'
         data:
           latitude: position.latitude
           longitude: position.longitude
