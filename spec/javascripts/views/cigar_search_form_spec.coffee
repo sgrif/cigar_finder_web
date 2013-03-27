@@ -1,15 +1,15 @@
 describe 'CigarFinderWeb.Views.CigarSearchForm', ->
-  [view, $el, submitButton, performSearch] = []
+  [view, $el, performSearch] = []
 
   renderView = =>
     form = $('<form>')
     view = new CigarFinderWeb.Views.CigarSearchForm()
     view.setElement(form).render()
     $el = view.$el
-    submitButton = view.$('input[type=submit]')
 
-    performSearch = (cigar_name) =>
+    performSearch = (cigar_name, location = '') =>
       view.$('.js-cigar-name').val(cigar_name)
+      view.$('.js-search-location').val(location)
       $el.submit()
 
   beforeEach =>
@@ -29,9 +29,9 @@ describe 'CigarFinderWeb.Views.CigarSearchForm', ->
         source: CigarFinderWeb.cigars
 
   describe "performing a search", =>
-    describe "when a cigar name has been entered", =>
+    sharedSearchExamples = =>
       it "sets its button to a loading state", =>
-        performSearch('Anything')
+        submitButton = view.$(':submit')
         waitsFor (=> submitButton.hasClass('disabled')),
           'Submit button was never disabled', 250
         runs =>
@@ -39,12 +39,7 @@ describe 'CigarFinderWeb.Views.CigarSearchForm', ->
           expect(submitButton).toHaveAttr('disabled')
           expect(submitButton).toHaveClass('disabled')
 
-      it "navigates to the results page", =>
-        performSearch('Tatuaje 7th Reserva')
-        expect(Backbone.history.navigate).toHaveBeenCalledWith(
-          'Tatuaje+7th+Reserva', trigger: true)
-
-    sharedDoesNotSubmitExamples = =>
+    sharedNoSearchExamples = =>
       it "leaves the submit button enabled", =>
         submitButton = view.$(':submit')
         expect(submitButton).not.toHaveAttr('value', 'Loading...')
@@ -57,22 +52,42 @@ describe 'CigarFinderWeb.Views.CigarSearchForm', ->
       it 'resets its form', =>
         expect(view.$('.js-cigar-name')).toHaveValue('')
 
+    describe "when a cigar name has been entered", =>
+      beforeEach =>
+        performSearch('Tatuaje 7th Reserva')
+
+      it "navigates to the results page", =>
+        expect(Backbone.history.navigate).toHaveBeenCalledWith(
+          'Tatuaje+7th+Reserva', trigger: true)
+
+      sharedSearchExamples()
+
     describe "when no cigar has been entered", =>
       beforeEach =>
         performSearch('')
 
-      sharedDoesNotSubmitExamples()
+      sharedNoSearchExamples()
 
     describe "when the entered cigar is already displayed", =>
       beforeEach =>
         view.trigger('search:loaded', 'Illusione Mk Ultra')
         performSearch('Illusione Mk Ultra')
 
-      sharedDoesNotSubmitExamples()
+      sharedNoSearchExamples()
+
+    describe "when a location has been entered", =>
+      beforeEach =>
+        performSearch('Tatuaje 7th Reserva', 'Albuquerque, NM')
+
+      it "navigates to the results page with a location", =>
+        expect(Backbone.history.navigate).toHaveBeenCalledWith(
+          'Tatuaje+7th+Reserva/Albuquerque%2C+NM', trigger: true)
+
+      sharedSearchExamples()
 
   describe "search loading", =>
     it "resets its form", =>
       performSearch('Illusione MK4')
       view.trigger('search:loaded')
       expect(view.$('.js-cigar-name')).toHaveValue('')
-      expect(submitButton).toHaveValue('Find it')
+      expect(view.$(':submit')).toHaveValue('Find it')

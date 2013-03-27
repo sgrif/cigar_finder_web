@@ -28,6 +28,13 @@ class CigarFinderWeb.Views.CigarSearchForm extends Backbone.View
     cigar_name = @$('.js-cigar-name').val()
     if cigar_name and cigar_name.toLowerCase() isnt @cigar.toLowerCase()
       @$(':submit').button('loading')
-      Backbone.history.navigate(encodePlus(cigar_name), trigger: true)
+      @navigateToSearchResults()
     else
       @resetForm()
+
+  navigateToSearchResults: =>
+    search_results_url = encodePlus(@$('.js-cigar-name').val())
+    location = @$('.js-search-location').val()
+    if location
+      search_results_url += "/#{encodePlus(location)}"
+    Backbone.history.navigate(search_results_url, trigger: true)

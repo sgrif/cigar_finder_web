@@ -9,7 +9,7 @@
 }
 
 .cigar-search-form {
-  @extend .form-search;
+  @extend .form-inline;
 
   input[type=search] {
     @extend .search-query;
@@ -26,11 +26,17 @@
 
 .hero-unit {
   .cigar-search-form {
+    label {
+      @extend .hero-unit;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
     input {
       @extend .btn-large;
     }
 
-    input[type=search] {
+    .cigar-name {
       @extend .input-large;
     }
   }

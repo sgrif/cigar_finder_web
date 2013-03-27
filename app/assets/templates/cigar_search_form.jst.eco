@@ -1,4 +1,11 @@
-<div class="input-append">
-  <input type="search" class="input-medium js-cigar-name" autocomplete="off" />
-  <input type="submit" value="Find it" class="btn" data-loading-text="Loading..." />
-</div>
+<label>
+  I'm looking for
+  <input type="text" class="input-medium js-cigar-name cigar-name" autocomplete="off" placeholder="ex. <%= CigarFinderWeb.cigars[0] %>" />
+</label>
+
+<label>
+  near
+  <input type="text" class="input-medium js-search-location" placeholder="Current Location" />
+</label>
+
+<input type="submit" value="Find it" class="btn" data-loading-text="Loading..." />
