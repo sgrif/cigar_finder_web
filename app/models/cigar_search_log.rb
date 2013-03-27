@@ -4,6 +4,6 @@ class CigarSearchLog < ActiveRecord::Base
   end
 
   def self.all_cigars
-    uniq.pluck(:cigar)
+    group(:cigar).order('count(*) desc').pluck(:cigar)
   end
 end
