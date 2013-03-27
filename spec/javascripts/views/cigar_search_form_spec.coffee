@@ -68,12 +68,20 @@ describe 'CigarFinderWeb.Views.CigarSearchForm', ->
 
       sharedNoSearchExamples()
 
-    describe "when the entered cigar is already displayed", =>
+    describe "when the entered cigar and location are already displayed", =>
       beforeEach =>
         view.trigger('search:loaded', 'Illusione Mk Ultra')
         performSearch('Illusione Mk Ultra')
 
       sharedNoSearchExamples()
+
+    describe "when the entered cigar is the same but location differs", =>
+      beforeEach =>
+        view.trigger('search:loaded', 'Tatuaje 7th Reserva')
+        view.logQuery = true
+        performSearch('Tatuaje 7th Reserva', 'Chicago')
+
+      sharedSearchExamples()
 
     describe "when a location has been entered", =>
       beforeEach =>

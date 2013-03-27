@@ -3,8 +3,10 @@ class CigarFinderWeb.Views.CigarSearch extends Backbone.View
 
   initialize: =>
     @collection.on('reset', @searchLoaded)
-    @resultsView = new CigarFinderWeb.Views.CigarSearchResultsIndex(collection: @collection)
-    @mapView = new CigarFinderWeb.Views.MapView(collection: @collection)
+    @resultsView = new CigarFinderWeb.Views.CigarSearchResultsIndex
+      collection: @collection
+    @mapView = new CigarFinderWeb.Views.MapView
+      collection: @collection
     @formView = new CigarFinderWeb.Views.CigarSearchForm()
 
   render: =>
@@ -15,11 +17,11 @@ class CigarFinderWeb.Views.CigarSearch extends Backbone.View
     @assign(@formView, '#js-new-search')
     this
 
-  performSearch: (cigar) =>
-    @cigar = cigar
+  performSearch: (cigar, location) =>
+    [@cigar, @location] = [cigar, location]
     CigarFinderWeb.cigars.push(cigar) unless _.contains(CigarFinderWeb.cigars, cigar)
-    @collection.fetchCigar(cigar)
+    @collection.fetchCigar(cigar, location)
 
   searchLoaded: =>
     @$('#js-cigar-name').html(@cigar)
-    @formView.trigger('search:loaded', @cigar)
+    @formView.trigger('search:loaded', @cigar, @location)

@@ -1,9 +1,13 @@
 class CigarFinderWeb.Services.LocationLoader
-  loadedLocation = null
+  [loadedLocation, geocoder] = []
   locationRequestPerformed = false
 
-  @loadLocation: (onSuccess = ->) =>
-    if loadedLocation?
+  @loadLocation: (query = null, onSuccess = ->) =>
+    [onSuccess, query] = [query, null] if typeof query is 'function'
+
+    if query?
+      geocodeQuery(query, onSuccess)
+    else if loadedLocation?
       onSuccess(loadedLocation)
     else
       @once('location:loaded', => onSuccess(loadedLocation))
@@ -12,6 +16,12 @@ class CigarFinderWeb.Services.LocationLoader
   @clearLocation: =>
     loadedLocation = null
     locationRequestPerformed = false
+
+  geocodeQuery = (query, onSuccess) =>
+    geocoder ||= new google.maps.Geocoder()
+    geocoder.geocode {address: query}, (resp) ->
+      latlng = resp[0].geometry.location
+      onSuccess(latitude: latlng.lat(), longitude: latlng.lng())
 
   locationCallback = (position) =>
     loadedLocation = position.coords

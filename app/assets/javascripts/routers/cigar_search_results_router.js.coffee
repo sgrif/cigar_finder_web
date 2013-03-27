@@ -2,6 +2,7 @@ class CigarFinderWeb.Routers.CigarSearchResults extends Backbone.Router
   routes:
     '': 'index'
     ':cigar_name': 'performSearch'
+    ':cigar_name/:location': 'performSearch'
 
   fadeTo: (view, callback = (->)) ->
     if @view is view
@@ -19,12 +20,10 @@ class CigarFinderWeb.Routers.CigarSearchResults extends Backbone.Router
     @introView = new CigarFinderWeb.Views.Intro()
     @fadeTo(@introView)
 
-  performSearch: (cigar_name) ->
+  performSearch: (cigar_name, location) ->
+    location = decodePlus(location) if location?
     unless @searchView?
       collection = new CigarFinderWeb.Collections.CigarSearchResults()
       @searchView = new CigarFinderWeb.Views.CigarSearch(collection: collection)
     @fadeTo @searchView, =>
-      @searchView.performSearch(@decodeCigarName(cigar_name))
-
-  decodeCigarName: (cigar_name) ->
-    decodeURIComponent(cigar_name.replace(/[+]/g, "%20"))
+      @searchView.performSearch(decodePlus(cigar_name), location)

@@ -49,13 +49,23 @@ describe 'CigarFinderWeb.Views.CigarSearch', ->
 
     it 'queries the api', =>
       view.performSearch('Tatuaje 7th Reserva')
-      expect(collection.fetchCigar).toHaveBeenCalledWith('Tatuaje 7th Reserva')
+      expect(collection.fetchCigar).toHaveBeenCalledWith('Tatuaje 7th Reserva', undefined)
 
     it 'displays the cigar name', =>
       view.performSearch('Illusione MK4')
       expect($el.find('#js-cigar-name').html()).toBe('Illusione MK4')
 
     it 'resets the form', =>
-      view.performSearch('El Rey Del Mundo')
+      view.performSearch('El Rey Del Mundo', 'Albuquerque')
       expect(mockViews['CigarSearchForm'].trigger).toHaveBeenCalledWith(
-        'search:loaded', 'El Rey Del Mundo')
+        'search:loaded', 'El Rey Del Mundo', 'Albuquerque')
+
+    it 'queries for a specific location', =>
+      view.performSearch('Tatuaje 7th Reserva', 'Albuquerque')
+      expect(collection.fetchCigar).toHaveBeenCalledWith('Tatuaje 7th Reserva', 'Albuquerque')
+
+  describe 'collection resetting', =>
+    it 'displays the cigar name', =>
+      view.performSearch('Illusione Mk')
+      collection.reset()
+      expect(view.$('#js-cigar-name')).toHaveText('Illusione Mk')

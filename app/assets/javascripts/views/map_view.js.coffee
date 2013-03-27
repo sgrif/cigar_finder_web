@@ -2,15 +2,20 @@ class CigarFinderWeb.Views.MapView extends Backbone.View
   id: 'map-canvas'
   markerViews: []
 
-  initialize: ->
+  initialize: (options) ->
+    @location = options.location
     @collection.on('reset', @renderMap)
 
   renderMap: =>
-    CigarFinderWeb.Services.LocationLoader.loadLocation (position) =>
-      @map ||= new google.maps.Map @el,
-        center: new google.maps.LatLng(position.latitude, position.longitude)
-        zoom: 11
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+    CigarFinderWeb.Services.LocationLoader.loadLocation @collection.location, (position) =>
+      center = new google.maps.LatLng(position.latitude, position.longitude)
+      if @map
+        @map.setCenter(center)
+      else
+        @map = new google.maps.Map @el,
+          center: center
+          zoom: 11
+          mapTypeId: google.maps.MapTypeId.ROADMAP
       @renderMarkers()
 
   renderMarkers: =>

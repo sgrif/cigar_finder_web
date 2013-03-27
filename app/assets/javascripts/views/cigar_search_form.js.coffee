@@ -15,8 +15,9 @@ class CigarFinderWeb.Views.CigarSearchForm extends Backbone.View
       source: CigarFinderWeb.cigars
     this
 
-  onSearchLoaded: (cigar) =>
+  onSearchLoaded: (cigar, location) =>
     @cigar = cigar
+    @location = location || ''
     @resetForm()
 
   resetForm: =>
@@ -25,12 +26,14 @@ class CigarFinderWeb.Views.CigarSearchForm extends Backbone.View
 
   performSearch: (e) =>
     e.preventDefault()
-    cigar_name = @$('.js-cigar-name').val()
-    if cigar_name and cigar_name.toLowerCase() isnt @cigar.toLowerCase()
+    if @$('.js-cigar-name').val() and @queryDiffers()
       @$(':submit').button('loading')
       @navigateToSearchResults()
     else
       @resetForm()
+
+  queryDiffers: =>
+    @$('.js-cigar-name').val() != @cigar || @$('.js-search-location').val() != @location
 
   navigateToSearchResults: =>
     search_results_url = encodePlus(@$('.js-cigar-name').val())

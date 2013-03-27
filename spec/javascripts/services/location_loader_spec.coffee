@@ -17,6 +17,25 @@ describe "CigarFinderWeb.Services.LocationLoader", ->
         {timeout: 5000}
       )
 
+    describe "when a location is passed", ->
+      latlng =
+        lat: -> 2
+        lng: -> -2
+
+      beforeEach ->
+        window.google =
+          maps:
+            Geocoder: ->
+        google.maps.Geocoder.prototype.geocode = ->
+        spyOn(google.maps.Geocoder.prototype, 'geocode').andCallFake (query, callback) ->
+          callback([geometry: {location: latlng}])
+
+      it "passes the locations coordinates to the callback function", ->
+        CigarFinderWeb.Services.LocationLoader.loadLocation('Albuquerque', callback)
+        expect(google.maps.Geocoder.prototype.geocode).toHaveBeenCalledWith(
+          {address: 'Albuquerque'}, jasmine.any(Function))
+        expect(callback).toHaveBeenCalledWith(latitude: 2, longitude: -2)
+
     describe "when geolocation is supported", ->
       location = coords: { latitude: 1, longitude: -1 }
 

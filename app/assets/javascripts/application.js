@@ -26,3 +26,6 @@
 function encodePlus(string) {
   return encodeURIComponent(string).replace(/(%20)+/g, "+");
 }
+function decodePlus(string) {
+  return decodeURIComponent(string.replace(/[+]/g, "%20"));
+}

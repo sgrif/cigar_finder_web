@@ -5,18 +5,22 @@ describe "CigarFinderWeb.Views.MapView", ->
     window.google =
       maps:
         Map: ->
+          setCenter: ->
         LatLng: ->
         MapTypeId:
           ROADMAP: 1
-    spyOn(CigarFinderWeb.Services.LocationLoader, 'loadLocation').andCallFake (callback) =>
-      callback(latitude: 1, longitude: -1)
+    spyOn(CigarFinderWeb.Services.LocationLoader, 'loadLocation').andCallFake (l, callback) =>
+      if l?
+        callback(latitude: 2, longitude: -2)
+      else
+        callback(latitude: 1, longitude: -1)
     collection = new Backbone.Collection()
     view = new CigarFinderWeb.Views.MapView(collection: collection)
     $el = $(view.render().el)
 
   describe 'collection resetting', =>
     beforeEach =>
-      spyOn(google.maps, "Map")
+      spyOn(google.maps, "Map").andCallThrough()
       spyOn(google.maps, "LatLng").andCallFake (lat, lng) ->
         {lat: lat, lng: lng}
       collection.reset()
@@ -30,6 +34,15 @@ describe "CigarFinderWeb.Views.MapView", ->
     it "only renders the map once", =>
       collection.reset()
       expect(google.maps.Map.callCount).toBe(1)
+
+    it "recenters the map", =>
+      view.renderMap()
+      spyOn(view.map, 'setCenter')
+      collection.location = "Albuquerque"
+      collection.reset()
+      expect(CigarFinderWeb.Services.LocationLoader.loadLocation).toHaveBeenCalledWith(
+        'Albuquerque', jasmine.any(Function))
+      expect(view.map.setCenter).toHaveBeenCalledWith(lat: 2, lng: -2)
 
     describe "marker views", =>
       mockMarker = null
