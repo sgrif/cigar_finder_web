@@ -19,7 +19,7 @@ end
 When /^I visit the search page for "(.*?)"$/ do |cigar|
   visit_home_page
   find('#js-find-a-cigar').click
-  find('#js-intro-find-cigar-name', visible: true).set(cigar)
+  find('#js-intro-find-form .js-cigar-name', visible: true).set(cigar)
   click_on("Find it")
   find('#js-cigar-name', visible: true, text: cigar)
 end

@@ -6,23 +6,26 @@ class CigarFinderWeb.Views.Intro extends Backbone.View
     'click #js-add-a-cigar': 'renderAdd'
     'submit #js-intro-find-form': 'submitFind'
 
+  initialize: ->
+    @searchForm = new CigarFinderWeb.Views.CigarSearchForm()
+
   render: ->
     @$el.html(@template())
     @addCigarView = new CigarFinderWeb.Views.NewCigarSearchResult(className: 'intro-step')
     @$el.append(@addCigarView.render().el)
     @$('#js-intro-buttons').show()
-    @$('#js-intro-find-cigar-name').typeahead(source: CigarFinderWeb.cigars)
+    @assign(@searchForm, '#js-intro-find-form')
     this
 
-  fadeTo: ($element) ->
+  fadeTo: (view) ->
     @$('.intro-step:visible').fadeOut =>
-      $element.fadeIn()
+      view.$el.fadeIn()
 
   renderFind: ->
-    @fadeTo(@$('#js-intro-find-form'))
+    @fadeTo(@searchForm)
 
   renderAdd: ->
-    @fadeTo(@addCigarView.$el)
+    @fadeTo(@addCigarView)
 
   submitFind: (e) ->
     e.preventDefault()

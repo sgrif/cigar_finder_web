@@ -4,9 +4,4 @@
   <a id='js-add-a-cigar' class="btn btn-large btn-info">Add a Cigar</a>
 </p>
 
-<form id='js-intro-find-form' class='intro-step cigar-search-form'>
-  <div class='input-append'>
-    <input type='search' id='js-intro-find-cigar-name' class='js-cigar-name' autocomplete='off' />
-    <button type='submit' class='btn btn-primary'>Find it</button>
-  </div>
-</form>
+<div id='js-intro-find-form' class='intro-step'></div>

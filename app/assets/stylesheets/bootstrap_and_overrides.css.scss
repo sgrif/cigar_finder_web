@@ -25,8 +25,14 @@
 }
 
 .hero-unit {
-  .cigar-name {
-    @extend .btn-large;
+  .cigar-search-form {
+    input {
+      @extend .btn-large;
+    }
+
+    input[type=search] {
+      @extend .input-large;
+    }
   }
 }
 
