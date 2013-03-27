@@ -1,11 +1,6 @@
 <h1>Cigar Finder</h1>
 
-<form id="new-search" class="cigar-search-form">
-  <div class="input-append">
-    <input type="search" id="new-search-cigar" class="input-medium js-cigar-name" autocomplete="off"/>
-    <input type="submit" value="Find it" class="btn" />
-  </div>
-</form>
+<div id="js-new-search"></div>
 
 <h2 id="js-cigar-name"></h2>
 

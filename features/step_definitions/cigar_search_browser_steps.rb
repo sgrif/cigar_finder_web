@@ -21,6 +21,7 @@ When /^I visit the search page for "(.*?)"$/ do |cigar|
   find('#js-find-a-cigar').click
   find('#js-intro-find-cigar-name', visible: true).set(cigar)
   click_on("Find it")
+  find('#js-cigar-name', visible: true, text: cigar)
 end
 
 When /^I open the search box$/ do
@@ -37,9 +38,9 @@ end
 
 Then /^I should see an autocomplete box with the following:$/ do |table|
   table.raw.map(&:first).each do |value|
-    find('ul.typeahead').should have_selector("li[data-value='#{value}']", count: 1)
+    find('#container ul.typeahead').should have_selector("li[data-value='#{value}']", count: 1)
   end
-  find('ul.typeahead').should have_selector("li", count: table.raw.count)
+  find('#container ul.typeahead').should have_selector("li", count: table.raw.count)
 end
 
 Then /^selected store should be "(.*?)"$/ do |store_name|
