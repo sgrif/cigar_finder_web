@@ -4,4 +4,4 @@
   <a id='js-add-a-cigar' class="btn btn-large btn-info">Add a Cigar</a>
 </p>
 
-<div id='js-intro-find-form' class='intro-step'></div>
+<form id='js-intro-find-form' class='intro-step'></form>

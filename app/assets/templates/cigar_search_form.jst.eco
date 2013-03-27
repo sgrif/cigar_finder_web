@@ -1,6 +1,4 @@
-<form class='cigar-search-form'>
-  <div class="input-append">
-    <input type="search" class="input-medium js-cigar-name" autocomplete="off" />
-    <input type="submit" value="Find it" class="btn" data-loading-text="Loading..." />
-  </div>
-</form>
+<div class="input-append">
+  <input type="search" class="input-medium js-cigar-name" autocomplete="off" />
+  <input type="submit" value="Find it" class="btn" data-loading-text="Loading..." />
+</div>

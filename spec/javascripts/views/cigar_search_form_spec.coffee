@@ -2,12 +2,15 @@ describe 'CigarFinderWeb.Views.CigarSearchForm', ->
   [view, $el, submitButton, performSearch] = []
 
   renderView = =>
+    form = $('<form>')
     view = new CigarFinderWeb.Views.CigarSearchForm()
-    $el = $(view.render().el)
+    view.setElement(form).render()
+    $el = view.$el
     submitButton = view.$('input[type=submit]')
+
     performSearch = (cigar_name) =>
       view.$('.js-cigar-name').val(cigar_name)
-      view.$('form').submit()
+      $el.submit()
 
   beforeEach =>
     spyOn(Backbone.history, 'navigate')
@@ -15,10 +18,9 @@ describe 'CigarFinderWeb.Views.CigarSearchForm', ->
 
   describe "rendering", =>
     it "displays a search form", =>
-      expect($el).toContain('form.cigar-search-form')
-      $form = $el.find('form.cigar-search-form')
-      expect($form).toContain('input.js-cigar-name')
-      expect($form).toContain("input[type=submit][value='Find it']")
+      expect($el).toHaveClass('cigar-search-form')
+      expect($el).toContain('input.js-cigar-name')
+      expect($el).toContain("input[type=submit][value='Find it']")
 
     it "sets up autocomplete for the cigar name", =>
       spyOn($.prototype, 'typeahead')
@@ -42,17 +44,31 @@ describe 'CigarFinderWeb.Views.CigarSearchForm', ->
         expect(Backbone.history.navigate).toHaveBeenCalledWith(
           'Tatuaje+7th+Reserva', trigger: true)
 
-    describe "when no cigar has been entered", =>
-      beforeEach =>
-        performSearch('')
-
+    sharedDoesNotSubmitExamples = =>
       it "leaves the submit button enabled", =>
+        submitButton = view.$(':submit')
         expect(submitButton).not.toHaveAttr('value', 'Loading...')
         expect(submitButton).not.toHaveAttr('disabled')
         expect(submitButton).not.toHaveClass('disabled')
 
       it "does not navigate", =>
         expect(Backbone.history.navigate).not.toHaveBeenCalled()
+
+      it 'resets its form', =>
+        expect(view.$('.js-cigar-name')).toHaveValue('')
+
+    describe "when no cigar has been entered", =>
+      beforeEach =>
+        performSearch('')
+
+      sharedDoesNotSubmitExamples()
+
+    describe "when the entered cigar is already displayed", =>
+      beforeEach =>
+        view.trigger('search:loaded', 'Illusione Mk Ultra')
+        performSearch('Illusione Mk Ultra')
+
+      sharedDoesNotSubmitExamples()
 
   describe "search loading", =>
     it "resets its form", =>

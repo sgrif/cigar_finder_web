@@ -1,6 +1,6 @@
 <h1>Cigar Finder</h1>
 
-<div id="js-new-search"></div>
+<form id="js-new-search"></form>
 
 <h2 id="js-cigar-name"></h2>
 
