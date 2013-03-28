@@ -21,22 +21,26 @@ end
 
 Given /^"([^"]*?)" carries "(.*?)"$/ do |store_name, cigar|
   store = CigarStoreSearch.near(@location).store_named(store_name)
-  CigarStock.save_carried(store, cigar)
+  post report_carried_cigar_search_results_path(cigar_store_id: store.id, cigar: cigar,
+                                               format: :json)
 end
 
 Given /^"(.*?)" in "(.*?)" carries "(.*?)"$/ do |store_name, location, cigar|
   store = CigarStoreSearch.near(get_location(location)).store_named(store_name)
-  CigarStock.save_carried(store, cigar)
+  post report_carried_cigar_search_results_path(cigar_store_id: store.id, cigar: cigar,
+                                               format: :json)
 end
 
 Given /^"([^"]*?)" does not carry "(.*?)"$/ do |store_name, cigar|
   store = CigarStoreSearch.near(@location).store_named(store_name)
-  CigarStock.save_not_carried(store, cigar)
+  post report_not_carried_cigar_search_results_path(cigar_store_id: store.id, cigar: cigar,
+                                                   format: :json)
 end
 
 Given /^"(.*?)" in "(.*?)" does not carry "(.*?)"$/ do |store_name, location, cigar|
   store = CigarStoreSearch.near(get_location(location)).store_named(store_name)
-  CigarStock.save_not_carried(store, cigar)
+  post report_not_carried_cigar_search_results_path(cigar_store_id: store.id, cigar: cigar,
+                                                   format: :json)
 end
 
 When /^I search for "([^"]*?)"$/ do |cigar|

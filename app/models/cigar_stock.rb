@@ -2,11 +2,15 @@ class CigarStock < ActiveRecord::Base
   belongs_to :cigar_store
 
   def self.save_carried(store, cigar)
-    where(cigar_store_id: store, cigar: cigar.titleize).first_or_initialize.send(:update_carried, true)
+    where(cigar_store_id: store, cigar: cigar.titleize).first_or_initialize.tap do |result|
+      result.send(:update_carried, true)
+    end
   end
 
   def self.save_not_carried(store, cigar)
-    where(cigar_store_id: store, cigar: cigar.titleize).first_or_initialize.send(:update_carried, false)
+    where(cigar_store_id: store, cigar: cigar.titleize).first_or_initialize.tap do |result|
+      result.send(:update_carried, false)
+    end
   end
 
   def self.load_stocks(stores, cigar)

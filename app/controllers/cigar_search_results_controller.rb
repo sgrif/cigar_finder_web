@@ -16,4 +16,14 @@ class CigarSearchResultsController < ApplicationController
     end
     render nothing: true
   end
+
+  def report_carried
+    render json: CigarStock.save_carried(params.fetch(:cigar_store_id),
+                                         params.fetch(:cigar))
+  end
+
+  def report_not_carried
+    render json: CigarStock.save_not_carried(params.fetch(:cigar_store_id),
+                                             params.fetch(:cigar))
+  end
 end

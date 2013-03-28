@@ -15,6 +15,6 @@ describe 'cigar_search_results/index' do
       cigar: 'Tatuaje 7th Reserva',
       carried: true)])
     render
-    rendered.should == [{cigar_store: cigar_store, cigar: 'Tatuaje 7th Reserva', carried: true}].to_json
+    rendered.should == [{cigar_store: cigar_store, cigar: 'Tatuaje 7th Reserva', carried: true, updated_at: nil}].to_json
   end
 end
