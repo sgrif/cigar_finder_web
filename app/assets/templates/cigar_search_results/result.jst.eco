@@ -1,11 +1,16 @@
-<%= @search_result.get('cigar_store').get('name') %>
-<span class='result-report-links'>
+<strong><%= @search_result.get('cigar_store').get('name') %></strong>
+<% if @search_result.get('carried')? : %>
+  <div class='result-last-reported'>
+    Last reported <%= $.timeago(@search_result.get('updated_at')) %>
+  </div>
+<% end %>
+<small class='result-report-links'>
   <% if @search_result.get('carried') is null : %>
     Does <%= @search_result.get('cigar_store').get('name') %> carry
     <%= @search_result.get('cigar') %>?
-    <a id='js-report-carried' href='#'>Yes</a>
-    <a id='js-report-not-carried' href='#'>No</a>
+    <a class='js-report-carried' href='#'>Yes</a>
+    <a class='js-report-not-carried' href='#'>No</a>
   <% else : %>
-    <a id='js-report-incorrect' href='#'>This is incorrect</a>
+    <a class='js-report-incorrect' href='#'>Report as incorrect</a>
   <% end %>
-</span>
+</small>

@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require underscore
+//= require rails-timeago
 //= require backbone
 //= require backbone_extensions
 //= require cigar_finder_web

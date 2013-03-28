@@ -3,7 +3,9 @@ describe "CigarFinderWeb.Views.CigarSearchResult", ->
     [model, view, $div, $el] = []
 
     beforeEach =>
-      model = new CigarFinderWeb.Models.CigarSearchResult(cigar_store: {name: "Jim's Cigars"})
+      model = new CigarFinderWeb.Models.CigarSearchResult
+        cigar_store: {name: "Jim's Cigars"}
+        updated_at: new Date
       spyOn(model, 'reportCarried')
       spyOn(model, 'reportNotCarried')
       spyOn(model, 'reportIncorrect')
@@ -31,11 +33,19 @@ describe "CigarFinderWeb.Views.CigarSearchResult", ->
       beforeEach =>
         model.set('carried', carried)
         renderView()
-        view.$('#js-report-incorrect').click()
+        view.$('.js-report-incorrect').click()
 
       it 'has an incorrect info link', =>
-        expect(view.$el).toContain('#js-report-incorrect')
+        expect(view.$el).toContain('.js-report-incorrect')
         expect(model.reportIncorrect).toHaveBeenCalled()
+
+      it 'displays when it was last reported', =>
+        yesterday = new Date()
+        yesterday.setDate(yesterday.getDate() - 1)
+        model.set('updated_at', yesterday)
+        renderView()
+        expect(view.$el).toContain('.result-last-reported')
+        expect(view.$('.result-last-reported')).toHaveText('Last reported a day ago')
 
     describe 'cigar is carried by store', =>
       sharedIncorrectInfoExamples(true)
@@ -48,12 +58,15 @@ describe "CigarFinderWeb.Views.CigarSearchResult", ->
         model.set('carried', null)
         renderView()
 
+      it 'does not display when it was last reported', =>
+        expect($el).not.toContain('.result-last-reported')
+
       it "displays a link to mark the result as carried", =>
-        expect($el).toContain('#js-report-carried')
-        view.$('#js-report-carried').click()
+        expect($el).toContain('.js-report-carried')
+        view.$('.js-report-carried').click()
         expect(model.reportCarried).toHaveBeenCalled()
 
       it "displays a link to mark the result as not carried", =>
-        expect($el).toContain('#js-report-not-carried')
-        view.$('#js-report-not-carried').click()
+        expect($el).toContain('.js-report-not-carried')
+        view.$('.js-report-not-carried').click()
         expect(model.reportNotCarried).toHaveBeenCalled()

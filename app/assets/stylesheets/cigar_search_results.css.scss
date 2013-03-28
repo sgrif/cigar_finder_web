@@ -1,9 +1,13 @@
-li.cigar-search-result {
-  .result-report-links {
-    display: none;
-  }
+@import "bootstrap/variables";
 
-  &:hover .result-report-links {
+li.cigar-search-result {
+  margin-bottom: 10px;
+
+  .result-report-links {
     display: block;
+
+    a {
+      color: $grayLight;
+    }
   }
 }
