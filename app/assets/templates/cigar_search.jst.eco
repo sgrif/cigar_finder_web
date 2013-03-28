@@ -1,6 +1,4 @@
-<h1>Cigar Finder</h1>
-
-<form id="js-new-search"></form>
+<form id="js-new-search" class='hero-unit'></form>
 
 <h2 id="js-cigar-name"></h2>
 

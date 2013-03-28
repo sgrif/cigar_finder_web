@@ -9,6 +9,9 @@ describe "CigarFinderWeb.Views.MapView", ->
         LatLng: ->
         MapTypeId:
           ROADMAP: 1
+        event:
+          addListener: ->
+    spyOn(google.maps.event, 'addListener')
     spyOn(CigarFinderWeb.Services.LocationLoader, 'loadLocation').andCallFake (l, callback) =>
       if l?
         callback(latitude: 2, longitude: -2)
@@ -17,6 +20,12 @@ describe "CigarFinderWeb.Views.MapView", ->
     collection = new Backbone.Collection()
     view = new CigarFinderWeb.Views.MapView(collection: collection)
     $el = $(view.render().el)
+
+  describe 'on click', =>
+    it "closes any open infowindows", =>
+      view.renderMap()
+      expect(google.maps.event.addListener).toHaveBeenCalledWith(view.map, 'click',
+        CigarFinderWeb.Views.MapInfoWindowView.removeOpenInfoWindow)
 
   describe 'collection resetting', =>
     beforeEach =>

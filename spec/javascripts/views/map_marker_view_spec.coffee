@@ -5,9 +5,10 @@ describe "CigarFinderWeb.Views.MapMarkerView", =>
     window.google =
       maps:
         Marker: ->
+        Size: (x,y) -> [x, y]
         event:
           addListener: ->
-    marker = jasmine.createSpyObj("marker", ["setMap"])
+    marker = jasmine.createSpyObj("marker", ["setMap", "setIcon"])
     spyOn(google.maps, "Marker").andReturn(marker)
     cigarStore = new Backbone.Model(name: "Jim's Cigars")
     cigarStore.getPosition = ->
@@ -52,9 +53,25 @@ describe "CigarFinderWeb.Views.MapMarkerView", =>
       model.set("carried", false)
       view.render(map)
 
-    it "does not render a marker on the map", =>
-      expect(google.maps.Marker).not.toHaveBeenCalled()
+    it "renders the correct icon", =>
+      expect(marker.setIcon).toHaveBeenCalledWith
+        url: CigarFinderWeb.Views.MapMarkerIcons.ICON_NOT_CARRIED
+        scaledSize: [6,6]
 
-    it "does nothing when remove is called", =>
-      view.remove()
-      expect(marker.setMap).not.toHaveBeenCalled()
+  describe "no information on cigar for store", =>
+    beforeEach =>
+      model.set("carried", null)
+      view.render(map)
+
+    it "renders the correct icon", =>
+      expect(marker.setIcon).toHaveBeenCalledWith
+        url: CigarFinderWeb.Views.MapMarkerIcons.ICON_NO_INFORMATION
+        scaledSize: [6,6]
+
+  describe "model changing", =>
+    beforeEach =>
+      view.render(map)
+
+    it "updates its icon", =>
+      model.set('carried', true)
+      expect(marker.setIcon).toHaveBeenCalledWith(undefined)

@@ -10,6 +10,8 @@
 
 .cigar-search-form {
   @extend .form-inline;
+  @extend .text-center;
+  margin-top: 25px;
 
   input[type=search] {
     @extend .search-query;
@@ -25,9 +27,12 @@
 }
 
 .hero-unit {
-  .cigar-search-form {
+  &.cigar-search-form {
+    background-color: white;
+
     label {
       @extend .hero-unit;
+      background-color: white;
       padding: 0;
       margin: 0;
     }

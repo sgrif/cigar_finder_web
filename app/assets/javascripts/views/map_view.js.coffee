@@ -16,6 +16,8 @@ class CigarFinderWeb.Views.MapView extends Backbone.View
           center: center
           zoom: 11
           mapTypeId: google.maps.MapTypeId.ROADMAP
+        google.maps.event.addListener(@map, 'click',
+          CigarFinderWeb.Views.MapInfoWindowView.removeOpenInfoWindow)
       @renderMarkers()
 
   renderMarkers: =>

@@ -18,6 +18,7 @@ class CigarFinderWeb.Views.CigarSearch extends Backbone.View
     this
 
   performSearch: (cigar, location) =>
+    @formView.$el.removeClass('hero-unit')
     [@cigar, @location] = [cigar, location]
     CigarFinderWeb.cigars.push(cigar) unless _.contains(CigarFinderWeb.cigars, cigar)
     @collection.fetchCigar(cigar, location)
