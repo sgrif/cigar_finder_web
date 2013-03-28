@@ -10,6 +10,7 @@ class CigarFinderWeb.Routers.CigarSearchResults extends Backbone.Router
     $('#container').html(@searchView.render().el)
 
   performSearch: (cigar_name, location) ->
+    cigar_name = toTitleCase(decodePlus(cigar_name))
     location = decodePlus(location) if location?
     @index() unless @searchView?
-    @searchView.performSearch(decodePlus(cigar_name), location)
+    @searchView.performSearch(cigar_name, location)
