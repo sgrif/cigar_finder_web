@@ -35,7 +35,6 @@ def report_cigar(store_name, cigar, selector)
   search_for_cigar(cigar)
   find('li.cigar-search-result', text: store_name, visible: true).
     find(selector).trigger('click')
-  sleep 0.01
 end
 
 When /^I report that "(.*?)" carries "(.*?)"$/ do |store_name, cigar|
@@ -49,7 +48,6 @@ end
 When /^I report that the data for "(.*?)" is incorrect$/ do |store_name|
   find('li.cigar-search-result', text: store_name, visible: true).
     find('#js-report-incorrect').trigger('click')
-  sleep 0.01
 end
 
 Then /^the page should show it is carried by "(.*?)"$/ do |store_name|

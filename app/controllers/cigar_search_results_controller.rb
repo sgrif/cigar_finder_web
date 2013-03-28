@@ -8,15 +8,6 @@ class CigarSearchResultsController < ApplicationController
     @search_results = cigar_search.results
   end
 
-  def create
-    if params.fetch(:carried).present?
-      CigarStock.save_carried(params.fetch(:cigar_store_id), params.fetch(:cigar))
-    else
-      CigarStock.save_not_carried(params.fetch(:cigar_store_id), params.fetch(:cigar))
-    end
-    render nothing: true
-  end
-
   def report_carried
     render json: CigarStock.save_carried(params.fetch(:cigar_store_id),
                                          params.fetch(:cigar))

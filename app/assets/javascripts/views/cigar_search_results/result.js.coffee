@@ -11,11 +11,14 @@ class CigarFinderWeb.Views.CigarSearchResult extends Backbone.View
     @$el.html(@template(search_result: @model))
     this
 
-  updateCarried: (e, carried) =>
+  resultIncorrect: (e) =>
     e.preventDefault()
-    @model.set('carried', carried)
-    @model.save()
+    @model.reportIncorrect()
 
-  resultIncorrect: (e) => @updateCarried(e, !@model.get('carried'))
-  resultCarried: (e) => @updateCarried(e, true)
-  resultNotCarried: (e) => @updateCarried(e, false)
+  resultCarried: (e) =>
+    e.preventDefault()
+    @model.reportCarried()
+
+  resultNotCarried: (e) =>
+    e.preventDefault()
+    @model.reportNotCarried()

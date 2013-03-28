@@ -1,5 +1,5 @@
 CigarFinderWeb::Application.routes.draw do
-  resources 'cigar_search_results', only: [:index, :create] do
+  resources 'cigar_search_results', only: [:index] do
     post 'report_carried', on: :collection
     post 'report_not_carried', on: :collection
   end
