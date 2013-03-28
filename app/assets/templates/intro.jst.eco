@@ -1,8 +1,0 @@
-<h1>Cigar Finder</h1>
-<p id='js-intro-buttons' class='intro-step intro-buttons'>
-  <a id='js-find-a-cigar' class="btn btn-large btn-primary">Find a Cigar</a>
-  <a id='js-add-a-cigar' class="btn btn-large btn-info">Add a Cigar</a>
-</p>
-
-<form id='js-intro-find-form' class='intro-step'></form>
-<form id='js-intro-add-form' class='intro-step'></form>
