@@ -2,9 +2,7 @@ class CigarSearchResultsController < ApplicationController
   respond_to :json
 
   def index
-    latitude = params[:latitude] || request.location.latitude
-    longitude = params[:longitude] || request.location.longitude
-    stores = CigarStoreSearch.new(latitude, longitude)
+    stores = CigarStoreSearch.new(params.fetch(:latitude), params.fetch(:longitude))
     cigar_search = CigarSearch.new(params.fetch(:cigar), stores)
     cigar_search.log_search(request.remote_ip)
     @search_results = cigar_search.results

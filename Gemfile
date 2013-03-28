@@ -23,7 +23,6 @@ gem 'bootstrap-sass', '~> 2.3.1.0'
 
 gem 'thin'
 
-gem 'geocoder'
 gem 'httparty'
 
 group :development do
@@ -37,6 +36,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'geocoder'
   gem 'cucumber-rails', require: false
   gem 'database_cleaner'
   gem 'vcr'

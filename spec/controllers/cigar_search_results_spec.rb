@@ -17,15 +17,8 @@ describe CigarSearchResultsController do
     response.code.should == '200'
   end
 
-  it 'looks up location based on IP if needed' do
-    CigarSearch.any_instance.stub(:results)
-    request.stub(:location).and_return(stub(latitude: 1, longitude: -1))
-    CigarStoreSearch.should_receive(:new).with(1, -1)
-    get :index, cigar: 'Illusione MK4', format: :json
-  end
-
   it 'logs that the search was performed' do
     CigarSearchLog.should_receive(:log_search).with('0.0.0.0', 'La Dueña')
-    get :index, cigar: 'La Dueña', format: :json
+    get :index, cigar: 'La Dueña', latitude: 1, longitude: -1, format: :json
   end
 end
