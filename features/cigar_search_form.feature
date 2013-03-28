@@ -1,22 +1,11 @@
 @javascript @vcr
 Feature: Cigar Search Form
-  Scenario: The intro search form autocompletes
-    Given somebody has searched for "Tatuaje 7th Reserva"
-
-    When I visit the home page
-    And I open the search box
-    And I fill in the cigar input with "T"
-
-    Then I should see an autocomplete box with the following:
-      | Tatuaje 7th Reserva |
-
-  Scenario: Intro search form does not have duplicates
+  Scenario: No duplicates
     Given somebody has searched for "Tatuaje 7th Reserva"
     And somebody has searched for "Tatuaje Cojonu 2012 Broadleaf"
     And somebody else has searched for "Tatuaje 7th Reserva"
 
     When I visit the home page
-    And I open the search box
     And I fill in the cigar input with "T"
 
     Then I should see an autocomplete box with the following:
