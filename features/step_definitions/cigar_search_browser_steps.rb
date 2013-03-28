@@ -50,8 +50,9 @@ end
 
 When /^I report that "(.*?)" carries "(.*?)"$/ do |store_name, cigar|
   search_for_cigar(cigar)
-  find('#js-results-list-no-answer li', text: store_name, visible: true).trigger(:mouseover)
-  find('#js-report-carried', visible: true).click
+  find('li.cigar-search-result', text: store_name, visible: true).
+    find('#js-report-carried').trigger('click')
+  sleep 0.01
 end
 
 When /^I report that "(.*?)" does not carry "(.*?)"$/ do |store_name, cigar|

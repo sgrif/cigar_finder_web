@@ -1,0 +1,9 @@
+li.cigar-search-result {
+  .result-report-links {
+    display: none;
+  }
+
+  &:hover .result-report-links {
+    display: block;
+  }
+}

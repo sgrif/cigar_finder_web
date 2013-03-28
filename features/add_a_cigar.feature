@@ -21,7 +21,6 @@ Feature: Adding a cigar
     Then I should see an autocomplete box with the following:
       | Illusione Mk Ultra |
 
-  @focus
   Scenario: Users can report a cigar as carried
     Given I am in Albuquerque
     When I report that "Monte's Cigars, Tobacco And Gifts" carries "Tatuaje 7th Reserva"

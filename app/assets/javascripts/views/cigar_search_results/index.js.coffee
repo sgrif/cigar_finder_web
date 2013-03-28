@@ -5,6 +5,7 @@ class CigarFinderWeb.Views.CigarSearchResultsIndex extends Backbone.View
 
   initialize: =>
     @collection.on('reset', @render)
+    @collection.on('change', @render)
 
   render: =>
     @$el.html(@template())

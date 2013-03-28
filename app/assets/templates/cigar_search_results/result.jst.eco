@@ -1,1 +1,11 @@
 <%= @search_result.get('cigar_store').get('name') %>
+<span class='result-report-links'>
+  <% if @search_result.get('carried') is null : %>
+    Does <%= @search_result.get('cigar_store').get('name') %> carry
+    <%= @search_result.get('cigar') %>?
+    <a id='js-report-carried' href='#'>Yes</a>
+    <a id='js-report-not-carried' href='#'>No</a>
+  <% else : %>
+    <a id='js-report-incorrect' href='#'>This is incorrect</a>
+  <% end %>
+</span>

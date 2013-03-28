@@ -1,6 +1,6 @@
 describe 'CigarFinderWeb.Models.CigarSearchResult', ->
   it 'creates a cigar store model with the given attributes', ->
-    cigarStore = jasmine.createSpy('CigarFinderWeb.Models.CigarStore')
+    cigarStore = jasmine.createSpyObj('CigarFinderWeb.Models.CigarStore', ['get'])
     spyOn(CigarFinderWeb.Models, 'CigarStore').andReturn(cigarStore)
     cigar_store_attrs =
       name: "Jim's Cigars"
