@@ -3,13 +3,17 @@ def encode_elements(*args)
   "/#{encoded.join("/")}"
 end
 
+def search_for_cigar(cigar)
+  visit(encode_elements(cigar, @location_name))
+  find('#js-cigar-name', visible: true, text: cigar)
+end
+
 When /^I visit the home page$/ do
   visit('/')
 end
 
 When /^I visit the search page for "(.*?)"$/ do |cigar|
-  visit(encode_elements(cigar, @location_name))
-  find('#js-cigar-name', visible: true, text: cigar)
+  search_for_cigar(cigar)
 end
 
 When /^I open the search box$/ do
@@ -45,7 +49,9 @@ def add_cigar(store_name, cigar, carried)
 end
 
 When /^I report that "(.*?)" carries "(.*?)"$/ do |store_name, cigar|
-  add_cigar(store_name, cigar, 'js-new-result-carried')
+  search_for_cigar(cigar)
+  find('#js-results-list-no-answer li', text: store_name, visible: true).trigger(:mouseover)
+  find('#js-report-carried', visible: true).click
 end
 
 When /^I report that "(.*?)" does not carry "(.*?)"$/ do |store_name, cigar|

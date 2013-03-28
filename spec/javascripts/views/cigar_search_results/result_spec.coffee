@@ -3,7 +3,7 @@ describe "CigarFinderWeb.Views.CigarSearchResult", ->
     [model, view, $el] = []
 
     beforeEach =>
-      model = new Backbone.Model(name: "Jim's Cigars")
+      model = new Backbone.Model(cigar_store: new Backbone.Model(name: "Jim's Cigars"))
       model.carriedDescription = ->
       view = new CigarFinderWeb.Views.CigarSearchResult(model: model)
 

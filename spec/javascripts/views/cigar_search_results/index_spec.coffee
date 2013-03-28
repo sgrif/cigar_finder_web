@@ -19,7 +19,7 @@ describe 'CigarFinderWeb.Views.CigarSearchResultsIndex', ->
 
     beforeEach ->
       spyOn(CigarFinderWeb.Views, 'CigarSearchResult').andCallFake (args) ->
-        render: -> el: "<div>#{args.model}</div>"
+        render: -> el: "<div>#{args.model.get('cigar_store')}</div>"
 
     it 'an unstyled list', ->
       expect($el).toBe('ul.unstyled')
