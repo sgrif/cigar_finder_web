@@ -10,8 +10,8 @@ describe OnlinePlaces do
     VCR.use_cassette('nearby-restaurants-downtown') do
       places = OnlinePlaces.places_near(home.latitude, home.longitude, keyword: 'restaurant')
       artichoke_index = places.index { |place| place[:name] == 'The Artichoke Cafe' }
-      frontier_index = places.index { |place| place[:name] == 'Frontier Restaurant' }
-      artichoke_index.should be < frontier_index
+      zinc_index = places.index { |place| place[:name] == 'Zinc Wine Bar & Bistro' }
+      artichoke_index.should be < zinc_index
     end
   end
 
