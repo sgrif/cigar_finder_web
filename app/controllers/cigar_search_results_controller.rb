@@ -1,4 +1,5 @@
 class CigarSearchResultsController < ApplicationController
+  skip_before_filter :verify_authenticity_token, only: [:report_carried, :report_not_carried]
   respond_to :json
 
   def index
