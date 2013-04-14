@@ -1,10 +1,16 @@
 class CigarStore < ActiveRecord::Base
+  has_many :cigar_stocks
+
   def self.load_stores(stores_attrs)
     store_names = stores_attrs.collect { |attrs| attrs[:name] }
     cigar_stores = where(name: store_names)
     stores_attrs.map do |attrs|
       matching_attrs_or_create!(attrs, cigar_stores)
     end
+  end
+
+  def known_stocks
+    cigar_stocks.cigars_with_information
   end
 
   private

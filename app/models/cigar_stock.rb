@@ -23,6 +23,10 @@ class CigarStock < ActiveRecord::Base
     where(cigar_store_id: cigar_store, cigar: cigar.titleize).first_or_create!.carried
   end
 
+  def self.cigars_with_information
+    where.not(carried: nil).pluck(:cigar)
+  end
+
   private
 
   def self.load_stock(cigar_stocks, cigar_store, cigar_name)

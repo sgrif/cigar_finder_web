@@ -6,6 +6,12 @@ CigarFinderWeb::Application.routes.draw do
 
   resources 'cigars', only: :index
 
+  resources 'cigar_stores', only: [] do
+    member do
+      get :missing_information
+    end
+  end
+
   get '*anything' => 'main#index'
   root to: 'main#index'
 end

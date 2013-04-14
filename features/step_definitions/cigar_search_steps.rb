@@ -77,6 +77,21 @@ Given /^somebody else has searched for "(.*?)"$/ do |cigar|
   CigarSearchLog.log_search('67.41.101.230', cigar)
 end
 
+Given /^(\d+) people have searched for "(.*?)"$/ do |count, cigar|
+  count.to_i.times do |x|
+    CigarSearchLog.log_search("127.0.0.#{x}", cigar)
+  end
+end
+
 Then /^I should see results for the cigar "(.*?)"$/ do |cigar|
   @search.first.fetch('cigar').should == cigar
+end
+
+When /^I ask what information we need for "(.*?)"$/ do |store_name|
+  store = CigarStoreSearch.near(@location).store_named(store_name)
+  get missing_information_cigar_store_path(store, format: :json)
+end
+
+Then /^the cigar I am given should be "(.*?)"$/ do |response|
+  ActiveSupport::JSON.decode(last_response.body).should == { 'cigar' => response }
 end

@@ -23,4 +23,9 @@ describe CigarStore do
     CigarStore.should_receive(:where).with(name: ['Jims', 'Bobs']).once.and_call_original
     CigarStore.load_stores([jims, bobs])
   end
+
+  it 'returns known stocks' do
+    CigarStock.stub(:cigars_with_information).and_return(['Tatuaje 7th Reserva'])
+    CigarStore.create(name: "Jim's").known_stocks.should == ['Tatuaje 7th Reserva']
+  end
 end

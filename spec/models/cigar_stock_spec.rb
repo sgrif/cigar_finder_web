@@ -53,4 +53,20 @@ describe CigarStock do
     CigarStock.save_carried(montes, 'Tatuaje Black Petit Lancero')
     CigarStock.cigar_carried?(montes, 'tatuaje black petit lancero').should == true
   end
+
+  context '.cigars_with_information' do
+    before do
+      CigarStock.save_carried(1, 'Tatuaje 7th Reserva')
+      CigarStock.save_carried(1, 'Illusione Mk')
+    end
+
+    it 'gives cigars with information' do
+      CigarStock.cigars_with_information.should == ['Tatuaje 7th Reserva', 'Illusione Mk']
+    end
+
+    it 'does not give cigars without information' do
+      CigarStock.where(cigar: 'Tatuaje 7th Reserva').update_all(carried: nil)
+      CigarStock.cigars_with_information.should == ['Illusione Mk']
+    end
+  end
 end
