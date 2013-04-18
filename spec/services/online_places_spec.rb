@@ -4,7 +4,7 @@ require 'vcr_helper'
 require 'geocoder'
 
 describe OnlinePlaces do
-  let(:home) { Geocoder.search('100 Silver SW Albuquerque NM').first }
+  let(:home) { Geocoder.search('100 Central SW Albuquerque NM').first }
 
   it 'should return relevant nearby places' do
     VCR.use_cassette('nearby-restaurants-downtown') do
