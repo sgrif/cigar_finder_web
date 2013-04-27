@@ -9,6 +9,7 @@ class OnlinePlaces
 
   def initialize(latitude, longitude, options = {})
     @query = default_params.merge(options)
+    @query.delete(:radius) if @query[:rankby] == 'distance'
     @query.merge!({ key: api_key, location: "#{latitude},#{longitude}" })
   end
 

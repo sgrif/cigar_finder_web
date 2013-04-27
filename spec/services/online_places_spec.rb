@@ -17,7 +17,7 @@ describe OnlinePlaces do
 
   it 'returns name, latitude, longitutde, and address' do
     VCR.use_cassette 'movies-downtown-albuquerque' do
-      places = OnlinePlaces.places_near(home.latitude, home.longitude, keyword: 'movies', rankby: 'distance', radius: nil)
+      places = OnlinePlaces.places_near(home.latitude, home.longitude, keyword: 'movies', rankby: 'distance')
       expected = {
         name: 'Cinemark 14 Downtown',
         latitude: 35.084046,
@@ -28,5 +28,14 @@ describe OnlinePlaces do
     end
   end
 
-  it 'should not pass a radius when rankby is set to distance'
+  it 'should not pass a radius when rankby is set to distance' do
+    VCR.use_cassette 'rank-by-distance' do
+      OnlinePlaces.stub(:get) do |url, args|
+        @request_query = args[:query]
+        HTTParty.get(OnlinePlaces.base_uri + url, args)
+      end
+      OnlinePlaces.places_near(home.latitude, home.longitude, keyword: 'stores', rankby: 'distance')
+      @request_query[:radius].should_not be_present
+    end
+  end
 end
