@@ -7,6 +7,9 @@ CigarFinderWeb::Application.routes.draw do
   resources 'cigars', only: :index
 
   resources 'cigar_stores', only: [] do
+    collection do
+      get :nearby
+    end
     member do
       get :missing_information
     end
