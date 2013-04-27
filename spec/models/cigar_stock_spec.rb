@@ -22,36 +22,38 @@ describe CigarStock do
     CigarStock.load_stocks([montes, stag], 'Tatuaje 7th Reserva').should == expected
   end
 
-  it 'creates new records when loading if none exists' do
-    stocks = nil
-    expect do
-      stocks = CigarStock.load_stocks([montes, vcut], 'Illusione MK4')
-    end.to change(CigarStock, :count).by(2)
-    stocks.collect(&:carried).should == [nil, nil]
-  end
-
-  it 'creates a new record for new cigars' do
-    expect { CigarStock.save_carried(montes, 'Tatuaje 7th Reserva') }.to change(CigarStock, :count).by(1)
-  end
-
-  it 'modifies existing records when given an already known cigar' do
-    CigarStock.save_carried(montes, 'The Mummy')
-    expect { CigarStock.save_not_carried(montes, 'The Mummy') }.not_to change(CigarStock, :count)
-    CigarStock.cigar_carried?(montes, 'The Mummy').should == false
-  end
-
-  it 'only performs one query' do
-    cigar = 'Tatuaje Black Petit Lancero'
-    CigarStock.save_carried(montes, cigar)
-    CigarStock.should_receive(:where).with(cigar_store_id: [montes, vcut], cigar: cigar).once.and_call_original
-    cigar_stocks = CigarStock.load_stocks([montes, vcut], cigar)
-    cigar_stocks.find { |stock| stock.cigar_store == montes }.carried.should == true
-    cigar_stocks.find { |stock| stock.cigar_store == vcut }.carried.should be_nil
-  end
-
   it 'is case insensitive' do
     CigarStock.save_carried(montes, 'Tatuaje Black Petit Lancero')
     CigarStock.cigar_carried?(montes, 'tatuaje black petit lancero').should == true
+  end
+
+  describe '#load_stocks' do
+    it 'creates new records when loading if none exists' do
+      stocks = nil
+      expect do
+        stocks = CigarStock.load_stocks([montes, vcut], 'Illusione MK4')
+      end.to change(CigarStock, :count).by(2)
+      stocks.collect(&:carried).should == [nil, nil]
+    end
+
+    it 'creates a new record for new cigars' do
+      expect { CigarStock.save_carried(montes, 'Tatuaje 7th Reserva') }.to change(CigarStock, :count).by(1)
+    end
+
+    it 'modifies existing records when given an already known cigar' do
+      CigarStock.save_carried(montes, 'The Mummy')
+      expect { CigarStock.save_not_carried(montes, 'The Mummy') }.not_to change(CigarStock, :count)
+      CigarStock.cigar_carried?(montes, 'The Mummy').should == false
+    end
+
+    it 'only performs one query' do
+      cigar = 'Tatuaje Black Petit Lancero'
+      CigarStock.save_carried(montes, cigar)
+      CigarStock.should_receive(:where).with(cigar_store_id: [montes, vcut], cigar: cigar).once.and_call_original
+      cigar_stocks = CigarStock.load_stocks([montes, vcut], cigar)
+      cigar_stocks.find { |stock| stock.cigar_store == montes }.carried.should == true
+      cigar_stocks.find { |stock| stock.cigar_store == vcut }.carried.should be_nil
+    end
   end
 
   context '.cigars_with_information' do
