@@ -6,15 +6,6 @@ require 'geocoder'
 describe OnlinePlaces do
   let(:home) { Geocoder.search('100 Central SW Albuquerque NM').first }
 
-  it 'should return relevant nearby places' do
-    VCR.use_cassette('nearby-restaurants-downtown') do
-      places = OnlinePlaces.places_near(home.latitude, home.longitude, keyword: 'restaurant')
-      artichoke_index = places.index { |place| place[:name] == 'The Artichoke Cafe' }
-      zinc_index = places.index { |place| place[:name] == 'Zinc Wine Bar & Bistro' }
-      artichoke_index.should be < zinc_index
-    end
-  end
-
   it 'returns relevant places first' do
     VCR.use_cassette 'stores-are-relevant' do
       places = OnlinePlaces.places_near(home.latitude, home.longitude, keyword: 'cigar')
