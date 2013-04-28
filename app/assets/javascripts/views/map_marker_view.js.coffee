@@ -30,7 +30,8 @@ class CigarFinderWeb.Views.MapMarkerView extends Backbone.View
   getIcon: =>
     switch @model.get('carried')
       when true
-        undefined
+        url: CigarFinderWeb.Views.MapMarkerIcons.ICON_CARRIED
+        scaledSize: new google.maps.Size(32, 32)
       when false
         url: CigarFinderWeb.Views.MapMarkerIcons.ICON_NOT_CARRIED
         scaledSize: new google.maps.Size(6,6)
