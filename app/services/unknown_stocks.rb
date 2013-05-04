@@ -7,6 +7,6 @@ class UnknownStocks
 
   def most_popular
     unknown_stocks = CigarSearchLog.all_cigars - cigar_store.known_stocks
-    unknown_stocks.first
+    unknown_stocks.first or cigar_store.known_stocks.first
   end
 end

@@ -70,5 +70,10 @@ describe CigarStock do
       CigarStock.where(cigar: 'Tatuaje 7th Reserva').update_all(carried: nil)
       CigarStock.cigars_with_information.should == ['Illusione Mk']
     end
+
+    it 'gives older information first' do
+      CigarStock.create!(cigar_store_id: 1, cigar: 'Tatuaje', carried: true, updated_at: Date.yesterday, created_at: Date.yesterday)
+      CigarStock.cigars_with_information.first.should == 'Tatuaje'
+    end
   end
 end

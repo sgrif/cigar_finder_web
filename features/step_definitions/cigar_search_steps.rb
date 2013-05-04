@@ -47,6 +47,14 @@ Given /^"(.*?)" in "(.*?)" does not carry "(.*?)"$/ do |store_name, location, ci
                                                    format: :json)
 end
 
+Given /^"(.*?)" was reported to carry "(.*?)" yesterday/ do |store_name, cigar|
+  store = CigarStoreSearch.near(@location).store_named(store_name)
+  stock = CigarStock.save_carried(store, cigar)
+  stock.updated_at = Date.yesterday
+  stock.created_at = Date.yesterday
+  stock.save
+end
+
 When /^I search for "([^"]*?)"$/ do |cigar|
   get cigar_search_results_path(cigar: cigar, latitude: @location.latitude, longitude: @location.longitude, format: :json)
   @search = ActiveSupport::JSON.decode(last_response.body)

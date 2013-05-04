@@ -24,7 +24,7 @@ class CigarStock < ActiveRecord::Base
   end
 
   def self.cigars_with_information
-    where.not(carried: nil).pluck(:cigar)
+    where.not(carried: nil).order(:updated_at).pluck(:cigar)
   end
 
   private

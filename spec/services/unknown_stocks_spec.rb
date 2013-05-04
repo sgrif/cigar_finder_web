@@ -17,4 +17,10 @@ describe UnknownStocks do
     cigar_store.stub(:known_stocks).and_return(['Tatuaje 7th Reserva'])
     unknown_inventory.most_popular.should == 'Illusione Mk'
   end
+
+  it 'gives oldest information as a fallback' do
+    CigarSearchLog.stub(:all_cigars).and_return(['Tatuaje 7th Reserva', 'Illusione Mk'])
+    cigar_store.stub(:known_stocks).and_return(['Tatuaje 7th Reserva', 'Illusione Mk'])
+    unknown_inventory.most_popular.should == 'Tatuaje 7th Reserva'
+  end
 end
