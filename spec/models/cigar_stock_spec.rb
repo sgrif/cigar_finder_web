@@ -10,6 +10,13 @@ describe CigarStock do
     CigarStock.cigar_carried?(vcut, 'Tatuaje 7th Reserva').should == true
   end
 
+  it 'updates the timestamps on new reports of the same information' do
+    cigar = 'Tatuaje 7th Reserva'
+    vcut.cigar_stocks.create!(carried: true, cigar: cigar, updated_at: Date.yesterday)
+    stock = CigarStock.save_carried(vcut, cigar)
+    stock.updated_at.should be > Date.yesterday
+  end
+
   it 'remembers cigars are not carried' do
     CigarStock.save_not_carried(stag, 'Liga Privada Feral Flying Pig')
     CigarStock.cigar_carried?(stag, 'Liga Privada Feral Flying Pig').should == false

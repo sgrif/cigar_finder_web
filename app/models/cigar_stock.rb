@@ -38,6 +38,6 @@ class CigarStock < ActiveRecord::Base
 
   def update_carried(new_carried)
     self.carried = new_carried
-    save!
+    save! and touch
   end
 end
