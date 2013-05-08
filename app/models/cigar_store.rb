@@ -13,6 +13,10 @@ class CigarStore < ActiveRecord::Base
     cigar_stocks.cigars_with_information
   end
 
+  def details_loaded?
+    false
+  end
+
   private
 
   def self.matching_attrs_or_create!(attrs, cigar_stores)

@@ -1,13 +1,14 @@
 require 'active_support/core_ext'
 require_relative '../../app/services/cigar_store_search'
-require 'httparty'
-require_relative '../../app/services/online_places'
 
 class CigarStore; end
+class OnlinePlaces; end
+class StoreDetails; end
 
 describe CigarStoreSearch do
   before do
     CigarStore.stub(:load_stores) { |stores| stores.map { |attrs| stub(attrs) } }
+    StoreDetails.stub(:load_needed)
   end
 
   let(:here) { stub(latitude: 35.12384, longitude: -106.586094) }
@@ -31,5 +32,11 @@ describe CigarStoreSearch do
     OnlinePlaces.stub(:places_near)
     CigarStore.stub(:load_stores) { [] }
     expect { CigarStoreSearch.near(here).store_named('Not Real') }.to raise_exception(CigarStoreSearch::StoreNotFound)
+  end
+
+  it 'loads the details of stores' do
+    OnlinePlaces.stub(:places_near) { [cigar_store_attrs] }
+    StoreDetails.should_receive(:load_needed)
+    CigarStoreSearch.near(here).find{}
   end
 end
