@@ -1,9 +1,10 @@
 require 'active_support/core_ext'
 require_relative '../../app/services/cigar_store_search'
+require 'httparty'
+require_relative '../../app/services/online_places'
+require_relative '../../app/services/store_details'
 
 class CigarStore; end
-class OnlinePlaces; end
-class StoreDetails; end
 
 describe CigarStoreSearch do
   before do

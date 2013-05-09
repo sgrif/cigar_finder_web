@@ -12,6 +12,16 @@ class StoreDetails
   end
 
   def load
+    store.save_details(OnlinePlaceDetails.for(reference))
+  end
 
+  private
+
+  def reference
+    store.google_details_reference
+  end
+
+  def store
+    @store ||= CigarStore.find(store_id)
   end
 end

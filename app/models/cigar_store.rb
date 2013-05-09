@@ -17,6 +17,10 @@ class CigarStore < ActiveRecord::Base
     phone_number.present?
   end
 
+  def save_details(details)
+    update_attributes!(details)
+  end
+
   private
 
   def self.matching_attrs_or_create!(attrs, cigar_stores)

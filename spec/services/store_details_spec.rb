@@ -1,16 +1,16 @@
-require_relative '../../app/services/store_details'
+require 'spec_helper'
 
 describe StoreDetails do
-  context '.load_needed' do
-    before do
-      StoreDetails.any_instance.stub(:load)
-    end
+  let(:montes) { CigarStore.create!(name: "Monte's", google_details_reference: 'montes') }
+  let(:stag) { CigarStore.create!(name: 'Stag') }
 
+  context '.load_needed' do
     it 'loads the deatils for stores that need it' do
-      loaded = double(id: 1, details_loaded?: true)
-      not_loaded = double(id: 2, details_loaded?: false)
-      StoreDetails.should_receive(:new).with(2).and_call_original
-      StoreDetails.load_needed([loaded, not_loaded])
+      montes.stub(:details_loaded?).and_return(false)
+      stag.stub(:details_loaded?).and_return(true)
+      OnlinePlaceDetails.should_receive(:for).with('montes').and_return(phone_number: '505-850-9255')
+      StoreDetails.load_needed([montes, stag])
+      montes.reload.phone_number.should == '505-850-9255'
     end
   end
 end
