@@ -19,6 +19,14 @@ describe CigarStore do
     expect { CigarStore.load_stores([jims, other_jims]) }.to change(CigarStore, :count).by(2)
   end
 
+  it 'updates any columns that differ besides name, latitude, and longitude' do
+    old_attrs = jims.merge(google_details_reference: 'jkl;jkl;')
+    store = CigarStore.create!(old_attrs)
+    new_attrs = jims.merge(google_details_reference: 'asdfasdf')
+    CigarStore.load_stores([new_attrs])
+    store.reload.google_details_reference.should == 'asdfasdf'
+  end
+
   it 'only performs one query to load multiple stores' do
     CigarStore.should_receive(:where).with(name: ['Jims', 'Bobs']).once.and_call_original
     CigarStore.load_stores([jims, bobs])

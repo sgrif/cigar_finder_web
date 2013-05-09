@@ -25,7 +25,8 @@ class OnlinePlaces
         name: place['name'],
         latitude: place['geometry']['location']['lat'],
         longitude: place['geometry']['location']['lng'],
-        address: place['vicinity']
+        address: place['vicinity'],
+        google_details_reference: place['reference']
       }
     end
   end

@@ -2,7 +2,8 @@ class CigarStoresController < ApplicationController
   def nearby
     latitude = params.fetch(:latitude)
     longitude = params.fetch(:longitude)
-    render json: CigarStoreSearch.new(latitude, longitude).to_a
+    @cigar_stores = CigarStoreSearch.new(latitude, longitude).to_a
+    render 'index'
   end
 
   def missing_information
