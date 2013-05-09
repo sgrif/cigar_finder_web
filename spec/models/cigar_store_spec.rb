@@ -36,4 +36,18 @@ describe CigarStore do
     CigarStock.stub(:cigars_with_information).and_return(['Tatuaje 7th Reserva'])
     CigarStore.create(name: "Jim's").known_stocks.should == ['Tatuaje 7th Reserva']
   end
+
+  describe '#details_loaded?' do
+    subject { cigar_store.details_loaded? }
+
+    context 'store with phone number' do
+      let(:cigar_store) { CigarStore.create!(jims.merge(phone_number: '505-850-9255')) }
+      it { should be_true }
+    end
+
+    context 'store with no phone number' do
+      let(:cigar_store) { CigarStore.create!(jims.merge(phone_number: nil)) }
+      it { should be_false }
+    end
+  end
 end

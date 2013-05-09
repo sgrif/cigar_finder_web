@@ -14,7 +14,7 @@ class CigarStore < ActiveRecord::Base
   end
 
   def details_loaded?
-    false
+    phone_number.present?
   end
 
   private
