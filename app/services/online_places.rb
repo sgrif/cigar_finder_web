@@ -1,4 +1,6 @@
 class OnlinePlaces
+  API_KEY = ENV.fetch('GOOGLE_API_KEY')
+
   include HTTParty
   base_uri 'https://maps.googleapis.com/maps/api/place'
   attr_reader :query
@@ -10,7 +12,7 @@ class OnlinePlaces
   def initialize(latitude, longitude, options = {})
     @query = default_params.merge(options)
     @query.delete(:radius) if @query[:rankby] == 'distance'
-    @query.merge!({ key: api_key, location: "#{latitude},#{longitude}" })
+    @query.merge!({ key: API_KEY, location: "#{latitude},#{longitude}" })
   end
 
   def results
@@ -40,9 +42,5 @@ class OnlinePlaces
       radius: 20000,
       sensor: false
     }
-  end
-
-  def api_key
-    @api_key ||= ENV.fetch('GOOGLE_API_KEY')
   end
 end

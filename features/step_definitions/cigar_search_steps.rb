@@ -7,7 +7,11 @@ Given /^I am in Albuquerque$/ do
   @location_name = 'Albuquerque'
 end
 
-When /^I list stores near me$/ do
+When /^I load details for stores near me$/ do
+  CigarStoreSearch.near(@location).find{}
+end
+
+When /^I list stores near me?$/ do
   get nearby_cigar_stores_path(latitude: @location.latitude, longitude: @location.longitude,
                                format: :json)
   @stores = ActiveSupport::JSON.decode(last_response.body)
@@ -19,7 +23,7 @@ Then /^"(.*?)" should be closer than "(.*?)"$/ do |store_name, other_store_name|
   @stores.index(store).should be < @stores.index(other_store)
 end
 
-Then(/^I should see "(.*?)" as the phone number for "(.*?)"$/) do |phone, store_name|
+Then /^I should see "(.*?)" as the phone number for "(.*?)"$/ do |phone, store_name|
   store = @stores.find { |data| data['name'] == store_name }
   store['phone_number'].should == phone
 end

@@ -6,7 +6,8 @@ describe 'cigar_stores/index' do
     name: "Jim's Cigars",
     address: '100 Main Street',
     latitude: 3.0,
-    longitude: 4.0
+    longitude: 4.0,
+    phone_number: '505-850-9255'
   } }
 
   it 'displays the search results' do
