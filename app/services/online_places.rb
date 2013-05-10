@@ -1,5 +1,5 @@
 class OnlinePlaces
-  API_KEY = ENV.fetch('GOOGLE_API_KEY')
+  API_KEY = ENV['GOOGLE_API_KEY']
 
   include HTTParty
   base_uri 'https://maps.googleapis.com/maps/api/place'
