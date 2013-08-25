@@ -3,28 +3,22 @@ source 'https://rubygems.org'
 ruby '2.0.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.0.beta1'
-
+gem 'rails', '4.0.0'
 gem 'pg'
 
-group :assets do
-  gem 'sass-rails',   '~> 4.0.0.beta1'
-  gem 'coffee-rails', '~> 4.0.0.beta1'
-  gem 'rails-timeago', '~> 2.0'
-
-  gem 'uglifier', '>= 1.0.3'
-  gem 'eco'
-end
-
-gem 'jquery-rails'
-gem 'turbolinks'
-gem 'jbuilder', '~> 1.0.1'
 gem 'backbone-on-rails'
 gem 'bootstrap-sass', '~> 2.3.1.0'
-
-gem 'thin'
-
+gem 'coffee-rails', '~> 4.0.0'
+gem 'eco'
 gem 'httparty'
+gem 'jbuilder', '~> 1.0.1'
+gem 'jquery-rails'
+gem 'rails-timeago', '~> 2.0'
+gem 'rails_12factor'
+gem 'sass-rails',   '~> 4.0.0'
+gem 'thin'
+gem 'turbolinks'
+gem 'uglifier', '>= 1.0.3'
 
 group :development do
   gem 'foreman'

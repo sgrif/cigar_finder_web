@@ -74,4 +74,6 @@ describe "CigarFinderWeb.Views.MapMarkerView", =>
 
     it "updates its icon", =>
       model.set('carried', true)
-      expect(marker.setIcon).toHaveBeenCalledWith(undefined)
+      expect(marker.setIcon).toHaveBeenCalledWith
+        url: CigarFinderWeb.Views.MapMarkerIcons.ICON_CARRIED
+        scaledSize: [32, 32]

@@ -22,9 +22,9 @@ end
 
 Then /^I should see an autocomplete box with the following:$/ do |table|
   table.raw.map(&:first).each do |value|
-    find('#container ul.typeahead').should have_selector("li[data-value='#{value}']", count: 1)
+    find('#container ul.typeahead', visible: false).should have_selector("li[data-value='#{value}']", count: 1, visible: false)
   end
-  find('#container ul.typeahead').should have_selector("li", count: table.raw.count)
+  find('#container ul.typeahead', visible: false).should have_selector("li", count: table.raw.count, visible: false)
 end
 
 Then /^the store list should contain "(.*?)"$/ do |store_name|
