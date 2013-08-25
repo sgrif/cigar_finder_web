@@ -6,6 +6,12 @@ Feature: Missing information
     When I ask what information we need for "Monte's Cigars, Tobacco And Gifts"
     Then the cigar I am given should be "Tatuaje 7th Reserva"
 
+  Scenario: Includes store information
+    Given I am in Albuquerque
+    And somebody has searched for "Any Cigar"
+    When I ask what information we need for "Monte's Cigars, Tobacco And Gifts"
+    Then the response should include the information for "Monte's Cigars, Tobacco And Gifts"
+
   Scenario: Most popular cigar is returned
     Given I am in Albuquerque
     And 2 people have searched for "Illusione Mk"

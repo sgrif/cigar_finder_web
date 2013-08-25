@@ -114,5 +114,13 @@ When /^I ask what information we need for "(.*?)"$/ do |store_name|
 end
 
 Then /^the cigar I am given should be "(.*?)"$/ do |response|
-  ActiveSupport::JSON.decode(last_response.body).should == { 'cigar' => response }
+  cigar = ActiveSupport::JSON.decode(last_response.body).fetch('cigar')
+  cigar.should == response
+end
+
+Then /^the response should include the information for "(.*?)"$/ do |store_name|
+  store = CigarStoreSearch.near(@location).store_named(store_name)
+  store_json = ActiveSupport::JSON.decode(last_response.body).fetch('cigar_store')
+  store_json.fetch('id').should == store.id
+  store_json.fetch('name').should == store.name
 end

@@ -34,6 +34,18 @@ describe CigarStock do
     CigarStock.cigar_carried?(montes, 'tatuaje black petit lancero').should == true
   end
 
+  it 'loads stocks for a single store with a cigar' do
+    stock = CigarStock.save_carried(montes, 'Tatuaje 7th Reserva')
+    CigarStock.for(montes, 'Tatuaje 7th Reserva').should == stock
+  end
+
+  it 'creates a new stock for a single store or cigar' do
+    stock = CigarStock.for(montes, 'Liga Privada')
+    stock.cigar_store.should == montes
+    stock.cigar.should == 'Liga Privada'
+    stock.should_not be_new_record
+  end
+
   describe '#load_stocks' do
     it 'creates new records when loading if none exists' do
       stocks = nil

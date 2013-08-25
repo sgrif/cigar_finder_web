@@ -27,6 +27,11 @@ class CigarStock < ActiveRecord::Base
     where.not(carried: nil).order(:updated_at).pluck(:cigar)
   end
 
+  def self.for(cigar_store, cigar)
+    stocks = where(cigar_store: cigar_store, cigar: cigar)
+    load_stock(stocks, cigar_store, cigar)
+  end
+
   private
 
   def self.load_stock(cigar_stocks, cigar_store, cigar_name)
