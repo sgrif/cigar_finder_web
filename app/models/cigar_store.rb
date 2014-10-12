@@ -35,8 +35,12 @@ class CigarStore < ActiveRecord::Base
   def self.matching_attrs(attrs, cigar_stores)
     cigar_stores.find do |cigar_store|
       cigar_store.name == attrs[:name] &&
-      cigar_store.latitude == attrs[:latitude] &&
-      cigar_store.longitude == attrs[:longitude]
+      similar_float?(cigar_store.latitude, attrs[:latitude])
+      similar_float?(cigar_store.longitude, attrs[:longitude])
     end
+  end
+
+  def self.similar_float?(float, other)
+    (float * 1000).round == (other * 1000).round
   end
 end
