@@ -25,7 +25,7 @@ class CigarStoreSearch
   end
 
   def load_results
-    places = OnlinePlaces.places_near(latitude, longitude, keyword: 'cigar')
+    places = OnlinePlaces.places_near(latitude, longitude, keyword: 'cigars')
     CigarStore.load_stores(places).tap do |stores|
       StoreDetails.load_needed(stores)
     end

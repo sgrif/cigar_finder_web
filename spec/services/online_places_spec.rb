@@ -8,7 +8,7 @@ describe OnlinePlaces do
 
   it 'returns relevant places first' do
     VCR.use_cassette 'stores-are-relevant' do
-      places = OnlinePlaces.places_near(home.latitude, home.longitude, keyword: 'cigar')
+      places = OnlinePlaces.places_near(home.latitude, home.longitude, keyword: 'cigars')
       jake_and_harleys_index = places.index { |place| place[:name] == 'Jake & Harleys cigar gallery and Smoking Lounge' }
       hookah_kings_index = places.index { |place| place[:name] == 'Hookah Kings' }
       jake_and_harleys_index.should be < hookah_kings_index
